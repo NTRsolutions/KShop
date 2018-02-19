@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "291043632456",
+    "firebase_url": "https://kshop-1.firebaseio.com",
+    "project_id": "kshop-1",
+    "storage_bucket": "kshop-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291043632456:android:e634dda5b36f875e",
+        "android_client_info": {
+          "package_name": "com.example.paulwinjeba.kshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291043632456-jej0ndfmk3brqoc4tuc8ufjea923rpd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUwuwJyMB1N9xd834hbOXc2jBGIEY_Rj8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

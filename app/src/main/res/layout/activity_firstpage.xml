@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.paulwinjeba.kshop.FirstpageActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="35dp"
+        android:paddingTop="20dp"
+        android:paddingRight="35dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="283dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            app:srcCompat="@drawable/kshop" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:text="Sign in to your Account"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorPrimaryDark"/>
+
+
+        <Button
+            android:id="@+id/loginbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log In     "
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:layout_margin="5dp"
+            android:fontFamily="sans-serif"
+            android:theme="@style/MyButton"
+            android:drawableLeft="@drawable/log_in"/>
+
+        <Button
+            android:id="@+id/signupbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up     "
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:fontFamily="sans-serif"
+            android:theme="@style/MyButton"
+            android:drawableLeft="@drawable/sign_in"/>
+
+        <Button
+            android:id="@+id/skipbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Skip to Home page"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:fontFamily="sans-serif"
+            android:theme="@style/MyButton"
+            android:drawableLeft="@drawable/home"/>
+
+    </LinearLayout>
+
+</LinearLayout>

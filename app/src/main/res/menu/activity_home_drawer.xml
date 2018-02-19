@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/electronics"
+            android:icon="@drawable/electronic"
+            android:title="Electronics" />
+        <item
+            android:id="@+id/clothes"
+            android:icon="@drawable/cloth"
+            android:title="Clothes" />
+        <item
+            android:id="@+id/bike"
+            android:icon="@drawable/bike"
+            android:title="Bike" />
+        <item
+            android:id="@+id/book"
+            android:icon="@drawable/book"
+            android:title="Books" />
+        <item
+            android:id="@+id/furniture"
+            android:icon="@drawable/add"
+            android:title="Furniture"/>
+    </group>
+
+    <item android:title="My Account">
+        <menu>
+            <item
+                android:id="@+id/my_profile"
+                android:icon="@drawable/my_profile"
+                android:title="My Profile" />
+            <item
+                android:id="@+id/upload"
+                android:icon="@drawable/upload"
+                android:title="Upload Item" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
+            <item
+                android:id="@+id/sett"
+                android:icon="@drawable/settings"
+                android:title="Settings" />
+        </menu>
+    </item>
+
+</menu>

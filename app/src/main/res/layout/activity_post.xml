@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.paulwinjeba.kshop.PostActivity">
+
+    <ScrollView android:layout_height="wrap_content"
+        android:layout_width="fill_parent" android:id="@+id/scrollView1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp">
+
+            <ImageButton
+                android:id="@+id/post_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="200dp"
+                android:minHeight="150dp"
+                android:paddingTop="20dp"
+                android:src="@android:drawable/ic_menu_add"
+                android:background="@drawable/input_outline"/>
+
+            <EditText
+                android:id="@+id/post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/input_outline"
+                android:inputType="text"
+                android:padding="12dp"
+                android:hint="   Post Title"
+                android:textAlignment="viewStart"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/post_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/input_outline"
+                android:inputType="textMultiLine"
+                android:padding="12dp"
+                android:hint="  Post Description"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:id="@+id/cat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/input_no_outline"
+                android:padding="1dp"
+                android:text="  Select the Category"
+                android:textColor="@color/blue5"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/category"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_outline"
+                android:padding="12dp"
+                android:layout_margin="5dp" />
+
+            <EditText
+                android:id="@+id/post_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/input_outline"
+                android:inputType="number"
+                android:padding="12dp"
+                android:hint="  Post Price"/>
+
+            <Button
+                android:id="@+id/post_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Post"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:paddingTop="20dp"
+                android:layout_margin="5dp"
+                android:textSize="16dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
