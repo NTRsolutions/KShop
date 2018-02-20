@@ -28,10 +28,18 @@
 
     <item android:title="My Account">
         <menu>
+            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/my_profile"
                 android:icon="@drawable/my_profile"
-                android:title="My Profile" />
+                android:title="My Profile">
+                <menu>
+                    <item
+                        android:id="@+id/profile"
+                        android:title="Account">
+                    </item>
+                </menu>
+            </item>
             <item
                 android:id="@+id/upload"
                 android:icon="@drawable/upload"
@@ -44,6 +52,7 @@
                 android:id="@+id/sett"
                 android:icon="@drawable/settings"
                 android:title="Settings" />
+            </group>
         </menu>
     </item>
 

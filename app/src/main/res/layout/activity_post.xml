@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.paulwinjeba.kshop.PostActivity">
 
-    <ScrollView android:layout_height="wrap_content"
+    <ScrollView android:layout_height="match_parent"
         android:layout_width="fill_parent" android:id="@+id/scrollView1">
 
         <LinearLayout
@@ -42,17 +42,6 @@
                 android:textAlignment="viewStart"
                 android:visibility="visible" />
 
-            <EditText
-                android:id="@+id/post_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/input_outline"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:hint="  Post Description"
-                android:textAlignment="viewStart" />
-
             <TextView
                 android:id="@+id/cat"
                 android:layout_width="match_parent"
@@ -71,6 +60,285 @@
                 android:background="@drawable/input_outline"
                 android:padding="12dp"
                 android:layout_margin="5dp" />
+
+            <!--case 0-->
+            <TextView
+                android:id="@+id/must_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dip"
+                android:textStyle="bold"
+                android:text="*Select one option "
+                android:visibility="gone"
+                android:textColor="@color/colorAccent"/>
+
+            <!--case 1-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/companyname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Company Name and Model"
+                    android:visibility="visible" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/specific"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/specification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Specifications About the device :"
+                    android:visibility="visible"
+                    android:inputType="textMultiLine" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--case 2-->
+            <LinearLayout
+                android:id="@+id/case_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:visibility="gone">
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/spinner_size"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:layout_weight="1"/>
+
+                <Spinner
+                    android:id="@+id/spinner_clothes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/specific_cloth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/specific_clothes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Specifications: Works on the cloth,details. "
+                    android:visibility="visible"
+                    tools:ignore="HardcodedText"
+                    android:inputType="textMultiLine" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--case 3-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/modelname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/model_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Manufracture Name and Model"
+                    android:visibility="visible" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/case_3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:visibility="gone">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/gear_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:orientation="horizontal"
+                    android:layout_weight="1.4"
+                    android:visibility="visible">
+
+                    <EditText
+                        android:id="@+id/gear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ems="8"
+                        android:hint="Gear: Yes / No"
+                        android:visibility="visible" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/noofgear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/no_of_gear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:hint="No. of gear"
+                        android:inputType="number"
+                        android:visibility="gone"
+                        tools:ignore="HardcodedText" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/case3_1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:visibility="gone">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/brakes_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:orientation="horizontal"
+                    android:layout_weight="1.8"
+                    android:visibility="visible">
+
+                    <EditText
+                        android:id="@+id/brake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ems="8"
+                        android:hint="Manual / Disk"
+                        android:visibility="visible"
+                        tools:ignore="HardcodedText" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/details_rims"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/rims"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:hint="Steel Rims/Alloy Rims"
+                        android:visibility="visible"
+                        android:inputType="text"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <!--case 4-->
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/bookname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/book_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Company Name and Model"
+                    android:visibility="gone" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/authername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/auther_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Specifications About the device :"
+                    android:visibility="visible"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/bookdesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/book_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Description about the book:edition,page no.,etc."
+                    android:visibility="visible"
+                    android:inputType="textMultiLine" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- case 5-->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Description about the item..."
+                    android:visibility="visible"
+                    android:inputType="textMultiLine" />
+            </android.support.design.widget.TextInputLayout>
+            <!--Description Box-->
 
             <EditText
                 android:id="@+id/post_price"

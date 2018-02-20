@@ -20,6 +20,26 @@
         <item>Clothes</item>
         <item>Books</item>
         <item>Bikes</item>
-        <item>Home Decor</item>
+        <item>Miscellaneous</item>
+    </string-array>
+
+    <string-array name="cloth">
+        <item>Select one</item>
+        <item>Cotton</item>
+        <item>Wool</item>
+        <item>Silk</item>
+        <item>Nylon</item>
+        <item>Linen</item>
+        <item>Chiffon</item>
+        <item>Polyester</item>
+    </string-array>
+
+    <string-array name="size">
+        <item>Select one</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>XXL</item>
     </string-array>
 </resources>

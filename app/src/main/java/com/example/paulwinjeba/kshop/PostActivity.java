@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,7 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,10 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
+    boolean doubleBackToExitPressedOnce = false;
 
-    private Spinner spinner;
+    TextView mstlabel;
+    TextInputLayout companyname,specific,specific_cloth,modelname,gear_deatils,noofgear,brakes_details,details_rims,bookname,authorname,bookdesc,desc;
+    EditText company_name,device_specification,specific_clothes,model_name,gear,noof_gear,brakes,rims,book_name,author_name,book_desc,description;
+    LinearLayout case_2,case_3,case3_1;
     private ImageButton post_img;
-    private EditText post_title, post_desc, post_price;
+    private EditText post_title, post_price;
     private Button post_btn;
     private Uri imageUri = null;
     private final int PICK_IMAGE_REQUEST = 7;
@@ -64,35 +71,164 @@ public class PostActivity extends AppCompatActivity {
         });
 
         post_title = (EditText) findViewById(R.id.post_title);
-        post_desc = (EditText) findViewById(R.id.post_description);
+
+        mstlabel = (TextView) findViewById(R.id.must_label);
+
+        company_name = (EditText) findViewById(R.id.company_name);
+        device_specification = (EditText) findViewById(R.id.specification);
+        specific_clothes = (EditText) findViewById(R.id.specific_clothes);
+        model_name = (EditText) findViewById(R.id.model_name);
+        gear = (EditText) findViewById(R.id.gear);
+        noof_gear = (EditText) findViewById(R.id.no_of_gear);
+        brakes = (EditText) findViewById(R.id.brake);
+        rims = (EditText) findViewById(R.id.rims);
+        book_name = (EditText) findViewById(R.id.book_name);
+        author_name = (EditText) findViewById(R.id.auther_name);
+        book_desc = (EditText) findViewById(R.id.book_desc);
+        description = (EditText) findViewById(R.id.description);
+
+
+        companyname = (TextInputLayout) findViewById(R.id.companyname) ;
+        specific = (TextInputLayout) findViewById(R.id.specific);
+        specific_cloth = (TextInputLayout) findViewById(R.id.specific_cloth);
+        modelname = (TextInputLayout) findViewById(R.id.modelname);
+        gear_deatils = (TextInputLayout) findViewById(R.id.gear_details);
+        noofgear = (TextInputLayout) findViewById(R.id.noofgear);
+        brakes_details = (TextInputLayout) findViewById(R.id.brakes_details);
+        details_rims = (TextInputLayout) findViewById(R.id.details_rims);
+        bookname = (TextInputLayout) findViewById(R.id.bookname);
+        authorname = (TextInputLayout) findViewById(R.id.authername);
+        bookdesc = (TextInputLayout) findViewById(R.id.bookdesc);
+        desc = (TextInputLayout) findViewById(R.id.desc);
+
+        case_2 = (LinearLayout) findViewById(R.id.case_2);
+        case_3 = (LinearLayout) findViewById(R.id.case_3);
+        case3_1 = (LinearLayout) findViewById(R.id.case3_1);
+
         post_price = (EditText) findViewById(R.id.post_price);
         //Spinner element
-        spinner = (Spinner) findViewById(R.id.category);
-        //Spinner click listener
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spinner_category = spinner.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        Spinner spinner_category = (Spinner) findViewById(R.id.category);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter adapter_cat = ArrayAdapter.createFromResource(this,
+                R.array.category, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter_cat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner_category.setAdapter(adapter_cat);
         //Sppinner Drop down elements for spinner
         List<String> categories = new ArrayList<String>();
         categories.add("Electronics");
         categories.add("Clothes");
         categories.add("Books");
         categories.add("Bikes");
-        categories.add("Accessories");
+        categories.add("Miscellaneous");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinner.setAdapter(adapter);
+        spinner_category.setAdapter(adapter);
+
+        Spinner spinner_clothes = (Spinner) findViewById(R.id.spinner_clothes);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter adapter_clothes = ArrayAdapter.createFromResource(this,
+                R.array.cloth, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter_clothes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner_clothes.setAdapter(adapter_clothes);
+
+        Spinner spinner_size = (Spinner) findViewById(R.id.spinner_size);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter adapter_size = ArrayAdapter.createFromResource(this,
+                R.array.size, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter_size.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner_size.setAdapter(adapter_size);
+
+
+        spinner_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                switch(i) {
+                    case 0:
+                        mstlabel.setVisibility(View.VISIBLE);
+                        /*mLabel.setVisibility(View.GONE);
+                        mTextField.setVisibility(View.GONE);*/
+                        break;
+
+                    case 1:
+                        mstlabel.setVisibility(View.GONE);
+                        companyname.setVisibility(View.VISIBLE);
+                        specific.setVisibility(View.VISIBLE);
+                        break;
+
+                    case 2:
+                        mstlabel.setVisibility(View.GONE);
+                        companyname.setVisibility(View.GONE);
+                        specific.setVisibility(View.GONE);
+
+                        case_2.setVisibility(View.VISIBLE);
+                        specific_cloth.setVisibility(View.VISIBLE);
+                        break;
+
+                    case 3:
+                        mstlabel.setVisibility(View.GONE);
+                        companyname.setVisibility(View.GONE);
+                        specific.setVisibility(View.GONE);
+                        case_2.setVisibility(View.GONE);
+                        specific_cloth.setVisibility(View.GONE);
+
+                        modelname.setVisibility(View.VISIBLE);
+                        case_3.setVisibility(View.VISIBLE);
+                        case3_1.setVisibility(View.VISIBLE);
+                        break;
+
+                    case 4:
+                        mstlabel.setVisibility(View.GONE);
+                        companyname.setVisibility(View.GONE);
+                        specific.setVisibility(View.GONE);
+                        case_2.setVisibility(View.GONE);
+                        specific_cloth.setVisibility(View.GONE);
+                        modelname.setVisibility(View.GONE);
+                        case_3.setVisibility(View.GONE);
+                        case3_1.setVisibility(View.GONE);
+
+                        bookname.setVisibility(View.VISIBLE);
+                        authorname.setVisibility(View.VISIBLE);
+                        bookdesc.setVisibility(View.VISIBLE);
+                        break;
+
+                    case 5 :
+                        mstlabel.setVisibility(View.GONE);
+                        companyname.setVisibility(View.GONE);
+                        specific.setVisibility(View.GONE);
+                        case_2.setVisibility(View.GONE);
+                        specific_cloth.setVisibility(View.GONE);
+                        modelname.setVisibility(View.GONE);
+                        case_3.setVisibility(View.GONE);
+                        case3_1.setVisibility(View.GONE);
+                        bookname.setVisibility(View.GONE);
+                        authorname.setVisibility(View.GONE);
+                        bookdesc.setVisibility(View.GONE);
+
+                        desc.setVisibility(View.VISIBLE);
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                //cas 0
+            }
+
+        });
 
         post_btn = (Button) findViewById(R.id.post_btn);
 
@@ -119,11 +255,11 @@ public class PostActivity extends AppCompatActivity {
         try {
 
             final String title = post_title.getText().toString().trim();
-            final String description = post_desc.getText().toString().trim();
+
             final String price = post_price.getText().toString().trim();
             final String category = spinner_category;
 
-            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(category) && imageUri != null) {
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(category) && imageUri != null) {
 
                 mProgress.show();
 
