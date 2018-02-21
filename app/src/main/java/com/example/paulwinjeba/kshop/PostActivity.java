@@ -120,8 +120,8 @@ public class PostActivity extends AppCompatActivity {
         List<String> categories = new ArrayList<String>();
         categories.add("Electronics");
         categories.add("Clothes");
-        categories.add("Books");
         categories.add("Bikes");
+        categories.add("Books");
         categories.add("Miscellaneous");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -276,12 +276,52 @@ public class PostActivity extends AppCompatActivity {
         try {
 
             final String title = post_title.getText().toString().trim();
-
+            final String Company_Name = company_name.getText().toString().trim();
+            final String Device_Specif = device_specification.getText().toString().trim();
+            final String Cloth_Specif = specific_clothes.getText().toString().trim();
+            final String Bike_Name = model_name.getText().toString().trim();
+            final String Bike_gear = gear.getText().toString().trim();
+            final String Bike_No_gear = noof_gear.getText().toString().trim();
+            final String Bike_brake = brakes.getText().toString().trim();
+            final String Bike_Rims = rims.getText().toString().trim();
+            final String Book_Name = book_name.getText().toString().trim();
+            final String Book_Author = author_name.getText().toString().trim();
+            final String Book_Specif = book_desc.getText().toString().trim();
+            final String Description = description.getText().toString().trim();
             final String price = post_price.getText().toString().trim();
             final String categories = category.getSelectedItem().toString().trim();
             final String cloth_types = cloth_type.getSelectedItem().toString().trim();
             final String cloth_sizes = cloth_size.getSelectedItem().toString().trim();
 
+            if(categories.equals("Electronics")){
+                if (!TextUtils.isEmpty(Company_Name) && !TextUtils.isEmpty(Device_Specif)){
+
+                }
+
+            }
+            else if(categories.equals("Clothes")){
+                if (!TextUtils.isEmpty(Cloth_Specif) && !TextUtils.isEmpty(cloth_types) && !TextUtils.isEmpty(cloth_sizes)){
+
+                }
+
+            }
+            else if(categories.equals("Bikes")){
+                if (!TextUtils.isEmpty(Bike_Name) && !TextUtils.isEmpty(Bike_brake) && !TextUtils.isEmpty(Bike_gear) && !TextUtils.isEmpty(Bike_No_gear) && !TextUtils.isEmpty(Bike_Rims)){
+
+                }
+
+            }
+            else if(categories.equals("Books")){
+                if (!TextUtils.isEmpty(Book_Name) && !TextUtils.isEmpty(Book_Author) && !TextUtils.isEmpty(Book_Specif)){
+
+                }
+            }
+            else{
+                if (!TextUtils.isEmpty(Description)){
+
+                }
+
+            }
             if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(categories) && imageUri != null) {
 
                 mProgress.show();

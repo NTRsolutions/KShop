@@ -18,8 +18,8 @@
     <string-array name="category">
         <item>Electronics</item>
         <item>Clothes</item>
-        <item>Books</item>
         <item>Bikes</item>
+        <item>Books</item>
         <item>Miscellaneous</item>
     </string-array>
 
