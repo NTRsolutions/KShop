@@ -2,6 +2,7 @@ package com.example.paulwinjeba.kshop;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.icu.text.StringPrepParseException;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -43,8 +44,7 @@ public class PostActivity extends AppCompatActivity {
     private Button post_btn;
     private Uri imageUri = null;
     private final int PICK_IMAGE_REQUEST = 7;
-    private String spinner_category;
-
+    private Spinner category,cloth_type,cloth_size;
     private ProgressDialog mProgress;
 
     //FirebaseStorage storage;
@@ -106,15 +106,16 @@ public class PostActivity extends AppCompatActivity {
         case3_1 = (LinearLayout) findViewById(R.id.case3_1);
 
         post_price = (EditText) findViewById(R.id.post_price);
-        //Spinner element
-        Spinner spinner_category = (Spinner) findViewById(R.id.category);
-// Create an ArrayAdapter using the string array and a default spinner layout
+
+        //Spinner element 1
+        category = (Spinner) findViewById(R.id.category);
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter adapter_cat = ArrayAdapter.createFromResource(this,
                 R.array.category, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
+        // Specify the layout to use when the list of choices appears
         adapter_cat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner_category.setAdapter(adapter_cat);
+        // Apply the adapter to the spinner
+        category.setAdapter(adapter_cat);
         //Sppinner Drop down elements for spinner
         List<String> categories = new ArrayList<String>();
         categories.add("Electronics");
@@ -122,33 +123,52 @@ public class PostActivity extends AppCompatActivity {
         categories.add("Books");
         categories.add("Bikes");
         categories.add("Miscellaneous");
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setAdapter(adapter);
 
-        spinner_category.setAdapter(adapter);
-
-        Spinner spinner_clothes = (Spinner) findViewById(R.id.spinner_clothes);
-// Create an ArrayAdapter using the string array and a default spinner layout
+        //Spinner element 2
+        cloth_type = (Spinner) findViewById(R.id.spinner_clothes);
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter adapter_clothes = ArrayAdapter.createFromResource(this,
                 R.array.cloth, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
+        // Specify the layout to use when the list of choices appears
         adapter_clothes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner_clothes.setAdapter(adapter_clothes);
+        // Apply the adapter to the spinner
+        cloth_type.setAdapter(adapter_clothes);
+        List<String> clothes_type = new ArrayList<String>();
+        clothes_type.add("Cotton");
+        clothes_type.add("Wool");
+        clothes_type.add("Silk");
+        clothes_type.add("Nylon");
+        clothes_type.add("Linen");
+        clothes_type.add("Chiffon");
+        clothes_type.add("Polyester");
+        ArrayAdapter<String> clothtype = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, clothes_type);
+        clothtype.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cloth_type.setAdapter(clothtype);
 
-        Spinner spinner_size = (Spinner) findViewById(R.id.spinner_size);
+        //Spinner element 3
+        cloth_size = (Spinner) findViewById(R.id.spinner_size);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter adapter_size = ArrayAdapter.createFromResource(this,
                 R.array.size, android.R.layout.simple_spinner_item);
 // Specify the layout to use when the list of choices appears
         adapter_size.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
-        spinner_size.setAdapter(adapter_size);
+        cloth_size.setAdapter(adapter_size);
+        List<String> clothsize = new ArrayList<String>();
+        clothsize.add("S");
+        clothsize.add("M");
+        clothsize.add("L");
+        clothsize.add("XL");
+        clothsize.add("XXL");
+        ArrayAdapter<String> clothsizes = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, clothsize);
+        clothsizes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cloth_size.setAdapter(clothsizes);
 
 
-        spinner_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
@@ -219,13 +239,14 @@ public class PostActivity extends AppCompatActivity {
 
                     default:
                         break;
+                        //in every case try doing the reverse also i.e if in case they select last and then first then desc is still visible
                 }
 
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
-                //cas 0
+                //case 0
             }
 
         });
@@ -257,9 +278,11 @@ public class PostActivity extends AppCompatActivity {
             final String title = post_title.getText().toString().trim();
 
             final String price = post_price.getText().toString().trim();
-            final String category = spinner_category;
+            final String categories = category.getSelectedItem().toString().trim();
+            final String cloth_types = cloth_type.getSelectedItem().toString().trim();
+            final String cloth_sizes = cloth_size.getSelectedItem().toString().trim();
 
-            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(category) && imageUri != null) {
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(categories) && imageUri != null) {
 
                 mProgress.show();
 

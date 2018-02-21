@@ -44,7 +44,8 @@ public class ElectronicsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_electronics);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Electronics");
+        //Change the database tree name :child
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
         mAuth = FirebaseAuth.getInstance();
 
         electronics_post = (RecyclerView) findViewById(R.id.electronics_view);
