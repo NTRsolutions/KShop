@@ -9,7 +9,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_electronics"
+        layout="@layout/app_bar_clothes"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -20,8 +20,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home"
-        app:menu="@menu/activity_electronics_drawer" />
+        app:menu="@menu/activity_clothes_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
-
-

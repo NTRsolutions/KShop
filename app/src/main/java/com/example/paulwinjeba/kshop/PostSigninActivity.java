@@ -96,8 +96,8 @@ public class PostSigninActivity extends AppCompatActivity {
                         DatabaseReference current_user_db = mDatabase.child(user_id);
 
                         current_user_db.child("Name").setValue(name);
-                        current_user_db.child("Phone Number").setValue(phonenumber);
-                        current_user_db.child("Email ID").setValue(email);
+                        current_user_db.child("Phone_Number").setValue(phonenumber);
+                        current_user_db.child("Email_ID").setValue(email);
                         current_user_db.child("Address").setValue(address);
 
                         //mProgress.dismiss();

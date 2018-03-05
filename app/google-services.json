@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "291043632456-bepfqdnnfl9keqmho05n8tf1kbdoeds4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paulwinjeba.kshop",
+            "certificate_hash": "858e17f26ad6f3c30775623235c006942a753037"
+          }
+        },
+        {
           "client_id": "291043632456-jej0ndfmk3brqoc4tuc8ufjea923rpd1.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291043632456-jej0ndfmk3brqoc4tuc8ufjea923rpd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

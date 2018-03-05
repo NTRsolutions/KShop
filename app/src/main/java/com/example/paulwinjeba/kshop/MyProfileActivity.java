@@ -3,69 +3,58 @@ package com.example.paulwinjeba.kshop;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-public class HomeActivity extends AppCompatActivity
+public class MyProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private RecyclerView PostList,ResultList;
+    private RecyclerView myProfile;
 
-    boolean isOnline;
     FirebaseAuth mAuth;
+    String myUuid=" ";
     private DatabaseReference databaseReference;
 
-    EditText search_text;
     Button login,signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_my_profile);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
         mAuth = FirebaseAuth.getInstance();
+        myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid);
 
-        //String display = String.valueOf(mAuth.getCurrentUser());
-
-        PostList = (RecyclerView) findViewById(R.id.post_list);
-        PostList.setHasFixedSize(true);
-        PostList.setLayoutManager(new LinearLayoutManager(this));
+        myProfile = (RecyclerView) findViewById(R.id.myprofile);
+        myProfile.setHasFixedSize(true);
+        myProfile.setLayoutManager(new LinearLayoutManager(this));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        final ConnectivityManager connectivityManager = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE));
-        isOnline = (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected() && connectivityManager.getActiveNetworkInfo().isAvailable());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,84 +64,58 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        try {
-            if (!isOnline)
-            {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("No Internet");
-                alertDialogBuilder.setMessage("Please check your Internet Connection and try again.");
-                alertDialogBuilder.setPositiveButton("Reload",new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int arg1) {
-                        Toast.makeText(HomeActivity.this,"Reconnecting",Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                alertDialogBuilder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally {
-
-        }
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
-                Blog.class,
-                R.layout.post_row,
-                BlogViewHolder.class,
+        FirebaseRecyclerAdapter<MyProfile, MyProfileActivity.MyProfileViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyProfile, MyProfileActivity.MyProfileViewHolder>(
+                MyProfile.class,
+                R.layout.my_profile,
+                MyProfileViewHolder.class,
                 databaseReference
         ) {
             @Override
-            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+            protected void populateViewHolder(MyProfileActivity.MyProfileViewHolder viewHolder, MyProfile model, int position) {
 
-                viewHolder.setTitle(model.getTitle());
-                viewHolder.setPrice(model.getPrice());
-                viewHolder.setImage(getApplicationContext(),model.getImage());
+                viewHolder.setName(model.getName());
+                viewHolder.setEmail_ID(model.getEmail_ID());
+                viewHolder.setPhone_Number(model.getPhone_Number());
+                viewHolder.setAddress(model.getAddress());
             }
         };
 
-        PostList.setAdapter(firebaseRecyclerAdapter);
+        myProfile.setAdapter(firebaseRecyclerAdapter);
+
     }
 
-    public static class BlogViewHolder extends RecyclerView.ViewHolder{
+    public static class MyProfileViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
 
-        public BlogViewHolder(View itemView) {
-                super(itemView);
-                mView = itemView;
+        public MyProfileViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
         }
 
-        public void setTitle(String Title){
-            TextView post_title = (TextView) mView.findViewById(R.id.post_title);
-            post_title.setText(Title);
+        public void setName(String Name){
+            TextView text_name = (TextView) mView.findViewById(R.id.text_name);
+            text_name.setText(Name);
         }
 
-        public void setPrice(String Price){
-            TextView post_price = (TextView) mView.findViewById(R.id.post_price);
-            post_price.setText(Price);
+        public void setEmail_ID(String Email_ID){
+            TextView text_email = (TextView) mView.findViewById(R.id.text_email);
+            text_email.setText(Email_ID);
         }
 
-        public void setImage(Context ctx,String Image){
-            ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.with(ctx.getApplicationContext()).load(Image).into(post_image);
-            //Glide.with(HomeActivity.this).load(Image).dontAnimate().into(post_image);
-            //Picasso.with(ctx.getApplicationContext()).load(Image).into(post_image);
+        public void setPhone_Number(String Phone_Number){
+            TextView text_phone = (TextView) mView.findViewById(R.id.text_phone);
+            text_phone.setText(Phone_Number);
+        }
+
+        public void setAddress(String Address){
+            TextView text_addr = (TextView) mView.findViewById(R.id.text_addr);
+            text_addr.setText(Address);
         }
     }
 
@@ -198,36 +161,28 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.electronics) {
             // Handle the electronics action
-            final Intent electronic = new Intent(HomeActivity.this,ElectronicsActivity.class);
+            final Intent electronic = new Intent(MyProfileActivity.this,ElectronicsActivity.class);
             startActivity(electronic);
         } else if (id == R.id.clothes) {
-            final Intent upload = new Intent(HomeActivity.this,ClothesActivity.class);
+            final Intent upload = new Intent(MyProfileActivity.this,ClothesActivity.class);
             startActivity(upload);
 
         } else if (id == R.id.bike) {
-            final Intent upload = new Intent(HomeActivity.this,BikesActivity.class);
+            final Intent upload = new Intent(MyProfileActivity.this,BikesActivity.class);
             startActivity(upload);
 
         } else if (id == R.id.book) {
-            final Intent upload = new Intent(HomeActivity.this,BooksActivity.class);
+            final Intent upload = new Intent(MyProfileActivity.this,BooksActivity.class);
             startActivity(upload);
-
-        } else if(id == R.id.miscellaneous){
-            final Intent electronic = new Intent(HomeActivity.this,MiscellaneousActivity.class);
-            startActivity(electronic);
 
         } else if (id == R.id.myprofile) {
-            final Intent upload = new Intent(HomeActivity.this,MyProfileActivity.class);
-            startActivity(upload);
-
-        } else if(id == R.id.mypost){
-            final Intent upload = new Intent(HomeActivity.this,MyPostActivity.class);
+            final Intent upload = new Intent(MyProfileActivity.this,PostActivity.class);
             startActivity(upload);
 
         } else if (id == R.id.upload) {
             if (mAuth.getCurrentUser() != null) {
                 // User is logged in
-                final Intent upload = new Intent(HomeActivity.this,PostActivity.class);
+                final Intent upload = new Intent(MyProfileActivity.this,PostActivity.class);
                 startActivity(upload);
             }
             else
@@ -236,7 +191,7 @@ public class HomeActivity extends AppCompatActivity
                     LayoutInflater inflater = getLayoutInflater();
                     View alertLayout;
                     alertLayout = inflater.inflate(R.layout.activity_inflater, null);
-                    AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MyProfileActivity.this);
                     //Set the button id
                     login = (Button) alertLayout.findViewById(R.id.log_in);
                     signin = (Button) alertLayout.findViewById(R.id.sign_in);
@@ -249,7 +204,7 @@ public class HomeActivity extends AppCompatActivity
                     login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent nxtlogin = new Intent(HomeActivity.this, PostLoginActivity.class);
+                            Intent nxtlogin = new Intent(MyProfileActivity.this, PostLoginActivity.class);
                             Log.d("login", "testing");
                             startActivity(nxtlogin);
                         }
@@ -259,7 +214,7 @@ public class HomeActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             Log.d("sign in checking", "tested");
-                            final Intent nxtsignin = new Intent(HomeActivity.this, PostSigninActivity.class);
+                            final Intent nxtsignin = new Intent(MyProfileActivity.this, PostSigninActivity.class);
                             startActivity(nxtsignin);
                         }
                     });
@@ -287,9 +242,9 @@ public class HomeActivity extends AppCompatActivity
 
             //End user session
             FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(HomeActivity.this, FirstpageActivity.class);
+            Intent homeagain = new Intent(MyProfileActivity.this, FirstpageActivity.class);
             homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(HomeActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+            Toast.makeText(MyProfileActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
             startActivity(homeagain);
 
         }else if (id == R.id.sett) {

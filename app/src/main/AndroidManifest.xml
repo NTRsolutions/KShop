@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".FirstpageActivity"
             android:theme="@style/AppTheme" />
@@ -46,8 +46,17 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".SignupActivity"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".ElectronicsActivity"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ElectronicsActivity" />
+        <activity android:name=".BikesActivity"
+            android:theme="@style/AppTheme"
+            android:label="Bikes"/>
+        <activity android:name=".BooksActivity" />
+        <activity android:name=".ClothesActivity" />
+        <activity android:name=".MiscellaneousActivity" />
+        <activity android:name=".MyPostActivity" />
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>

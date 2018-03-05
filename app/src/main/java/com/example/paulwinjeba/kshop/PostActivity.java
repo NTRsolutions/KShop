@@ -2,7 +2,6 @@ package com.example.paulwinjeba.kshop;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.icu.text.StringPrepParseException;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,8 +36,8 @@ public class PostActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
 
     TextView mstlabel;
-    TextInputLayout companyname,specific,specific_cloth,modelname,gear_deatils,noofgear,brakes_details,details_rims,bookname,authorname,bookdesc,desc;
-    EditText company_name,device_specification,specific_clothes,model_name,gear,noof_gear,brakes,rims,book_name,author_name,book_desc,description;
+    TextInputLayout companyname,specific,specific_cloth,modelname,gear_deatils,noofgear,brakes_details,details_rims,bookname,authorname,bookdesc,desc,desc_bike;
+    EditText company_name,device_specification,specific_clothes,model_name,gear,noof_gear,brakes,rims,book_name,author_name,book_desc,description,description_bike;
     LinearLayout case_2,case_3,case3_1;
     private ImageButton post_img;
     private EditText post_title, post_price;
@@ -46,10 +46,14 @@ public class PostActivity extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 7;
     private Spinner category,cloth_type,cloth_size;
     private ProgressDialog mProgress;
+    private String spin_category;
+    private String desc_cloth_1,desc_cloth_2;
 
+    String description_1,description_2;
     //FirebaseStorage storage;
     StorageReference storageReference;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,mDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,9 @@ public class PostActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
 
         post_img = (ImageButton) findViewById(R.id.post_img);
         mProgress = new ProgressDialog(this);
@@ -86,7 +93,7 @@ public class PostActivity extends AppCompatActivity {
         author_name = (EditText) findViewById(R.id.auther_name);
         book_desc = (EditText) findViewById(R.id.book_desc);
         description = (EditText) findViewById(R.id.description);
-
+        description_bike = (EditText) findViewById(R.id.description_bike);
 
         companyname = (TextInputLayout) findViewById(R.id.companyname) ;
         specific = (TextInputLayout) findViewById(R.id.specific);
@@ -100,6 +107,7 @@ public class PostActivity extends AppCompatActivity {
         authorname = (TextInputLayout) findViewById(R.id.authername);
         bookdesc = (TextInputLayout) findViewById(R.id.bookdesc);
         desc = (TextInputLayout) findViewById(R.id.desc);
+        desc_bike = (TextInputLayout) findViewById(R.id.desc_bike);
 
         case_2 = (LinearLayout) findViewById(R.id.case_2);
         case_3 = (LinearLayout) findViewById(R.id.case_3);
@@ -276,90 +284,252 @@ public class PostActivity extends AppCompatActivity {
         try {
 
             final String title = post_title.getText().toString().trim();
-            final String Company_Name = company_name.getText().toString().trim();
-            final String Device_Specif = device_specification.getText().toString().trim();
-            final String Cloth_Specif = specific_clothes.getText().toString().trim();
-            final String Bike_Name = model_name.getText().toString().trim();
-            final String Bike_gear = gear.getText().toString().trim();
-            final String Bike_No_gear = noof_gear.getText().toString().trim();
-            final String Bike_brake = brakes.getText().toString().trim();
-            final String Bike_Rims = rims.getText().toString().trim();
-            final String Book_Name = book_name.getText().toString().trim();
-            final String Book_Author = author_name.getText().toString().trim();
-            final String Book_Specif = book_desc.getText().toString().trim();
-            final String Description = description.getText().toString().trim();
             final String price = post_price.getText().toString().trim();
-            final String categories = category.getSelectedItem().toString().trim();
-            final String cloth_types = cloth_type.getSelectedItem().toString().trim();
-            final String cloth_sizes = cloth_size.getSelectedItem().toString().trim();
+            final String category = spin_category;
 
-            if(categories.equals("Electronics")){
-                if (!TextUtils.isEmpty(Company_Name) && !TextUtils.isEmpty(Device_Specif)){
 
-                }
+            /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
-            }
-            else if(categories.equals("Clothes")){
-                if (!TextUtils.isEmpty(Cloth_Specif) && !TextUtils.isEmpty(cloth_types) && !TextUtils.isEmpty(cloth_sizes)){
+            mProgress.show();
 
-                }
+            StorageReference filepath = storageReference.child("Post_Images").child(imageUri.getLastPathSegment());
 
-            }
-            else if(categories.equals("Bikes")){
-                if (!TextUtils.isEmpty(Bike_Name) && !TextUtils.isEmpty(Bike_brake) && !TextUtils.isEmpty(Bike_gear) && !TextUtils.isEmpty(Bike_No_gear) && !TextUtils.isEmpty(Bike_Rims)){
+            filepath.putFile(imageUri).
+                    addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                }
+                            if (category.equals("Electronics")) {
+                                description_1 = company_name.getText().toString().trim();
+                                description_2 = device_specification.getText().toString().trim();
 
-            }
-            else if(categories.equals("Books")){
-                if (!TextUtils.isEmpty(Book_Name) && !TextUtils.isEmpty(Book_Author) && !TextUtils.isEmpty(Book_Specif)){
-
-                }
-            }
-            else{
-                if (!TextUtils.isEmpty(Description)){
-
-                }
-
-            }
-            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(categories) && imageUri != null) {
-
-                mProgress.show();
-
-                StorageReference filepath = storageReference.child("Post_Images").child(imageUri.getLastPathSegment());
-
-                filepath.putFile(imageUri).
-                        addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
-                                DatabaseReference newPost = databaseReference.push();
+                                DatabaseReference newPost = databaseReference.child("Post");
 
                                 newPost.child("Title").setValue(title);
-                                newPost.child("Description").setValue(description);
-                                newPost.child("Price").setValue(price);
-                                newPost.child("Category").setValue(category);
                                 newPost.child("Image").setValue(downloadUrl.toString());
-                                //newPost.child("uid").setValue(FirebaseAuth.getInstance());
+                                newPost.child("Category").setValue(category);
+                                newPost.child("Description_1").setValue(description_1);
+                                newPost.child("Description_2").setValue(description_2);
+                                newPost.child("Price").setValue(price);
+
+                                String key = databaseReference.child("Post").push().getKey();
 
                                 mProgress.dismiss();
                                 Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
                                 startActivity(home_again);
-                                Toast.makeText(PostActivity.this,"Successfully Uploaded...",Toast.LENGTH_LONG).show();
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
+
+                                //Upload in Electronics
+                                DatabaseReference newPostE = databaseReference.child("Electronics").child(key).push();
+
+                                newPostE.child("Title").setValue(title);
+                                newPostE.child("Image").setValue(downloadUrl.toString());
+                                newPostE.child("Category").setValue(category);
+                                newPostE.child("Description_1").setValue(description_1);
+                                newPostE.child("Description_2").setValue(description_2);
+                                newPostE.child("Price").setValue(price);
+
+                                //Upload under user
+                                String user_id = mAuth.getCurrentUser().getUid();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                myPost.child("Title").setValue(title);
+                                myPost.child("Image").setValue(downloadUrl.toString());
+                                myPost.child("Category").setValue(category);
+                                myPost.child("Description_1").setValue(description_1);
+                                myPost.child("Description_2").setValue(description_2);
+                                myPost.child("Price").setValue(price);
 
                             }
-                        });
-                filepath.putFile(imageUri).addOnFailureListener((new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Intent homeintent = new Intent(PostActivity.this, HomeActivity.class);
-                        homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(homeintent);
-                        Toast.makeText(PostActivity.this,"Inable to Upload Files...",Toast.LENGTH_LONG).show();
-                    }
-                }) );
-            }
+
+                            else if(category.equals("Clothes")) {
+                                description_1 = "Material : " + desc_cloth_2 + " Size : " + desc_cloth_1;
+                                description_2 = specific_clothes.getText().toString().trim();
+
+                                DatabaseReference newPost = databaseReference.child("Post");
+
+                                newPost.child("Title").setValue(title);
+                                newPost.child("Image").setValue(downloadUrl.toString());
+                                newPost.child("Category").setValue(category);
+                                newPost.child("Description_1").setValue(description_1);
+                                newPost.child("Description_2").setValue(description_2);
+                                newPost.child("Price").setValue(price);
+
+                                String key = databaseReference.child("Post").push().getKey();
+
+                                mProgress.dismiss();
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
+
+                                //Upload in Electronics
+                                DatabaseReference newPostE = databaseReference.child("Clothes").child(key).push();
+
+                                newPostE.child("Title").setValue(title);
+                                newPostE.child("Image").setValue(downloadUrl.toString());
+                                newPostE.child("Category").setValue(category);
+                                newPostE.child("Description_1").setValue(description_1);
+                                newPostE.child("Description_2").setValue(description_2);
+                                newPostE.child("Price").setValue(price);
+
+                                //Upload under user
+                                String user_id = mAuth.getCurrentUser().getUid();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                myPost.child("Title").setValue(title);
+                                myPost.child("Image").setValue(downloadUrl.toString());
+                                myPost.child("Category").setValue(category);
+                                myPost.child("Description_1").setValue(description_1);
+                                myPost.child("Description_2").setValue(description_2);
+                                myPost.child("Price").setValue(price);
+
+                            }
+
+                            else if(category.equals("Bikes")){
+
+                                String desc_model = model_name.getText().toString().trim();
+                                String desc_gear = gear.getText().toString().trim();
+                                String nogear = noof_gear.getText().toString().trim();
+                                String brake_s = brakes.getText().toString().trim();
+                                String rim_s = rims.getText().toString().trim();
+                                description_1 = "Model : "+desc_model+" with Gear : "+desc_gear+ " Number of gears : "+nogear+ " , with Brakes : " +brake_s+ " and Rims : "+rim_s;
+                                description_2 = description_bike.getText().toString().trim();
+
+                                DatabaseReference newPost = databaseReference.child("Post");
+
+                                newPost.child("Title").setValue(title);
+                                newPost.child("Image").setValue(downloadUrl.toString());
+                                newPost.child("Category").setValue(category);
+                                newPost.child("Description_1").setValue(description_1);
+                                newPost.child("Description_2").setValue(description_2);
+                                newPost.child("Price").setValue(price);
+
+                                String key = databaseReference.child("Post").push().getKey();
+
+                                mProgress.dismiss();
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
+
+                                //Upload in Bikes
+                                DatabaseReference newPostE = databaseReference.child("Bikes").child(key).push();
+
+                                newPostE.child("Title").setValue(title);
+                                newPostE.child("Image").setValue(downloadUrl.toString());
+                                newPostE.child("Category").setValue(category);
+                                newPostE.child("Description_1").setValue(description_1);
+                                newPostE.child("Description_2").setValue(description_2);
+                                newPostE.child("Price").setValue(price);
+
+                                //Upload under user
+                                String user_id = mAuth.getCurrentUser().getUid();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                myPost.child("Title").setValue(title);
+                                myPost.child("Image").setValue(downloadUrl.toString());
+                                myPost.child("Category").setValue(category);
+                                myPost.child("Description_1").setValue(description_1);
+                                myPost.child("Description_2").setValue(description_2);
+                                myPost.child("Price").setValue(price);
+
+                            }
+
+                            else if(category.equals("Books")){
+
+                                String bookname = book_name.getText().toString().trim();
+                                String author = author_name.getText().toString().trim();
+                                description_1 = "Book : "+bookname+ " Author : "+author;
+                                description_2 = book_desc.getText().toString().trim();
+
+                                DatabaseReference newPost = databaseReference.child("Post");
+
+                                newPost.child("Title").setValue(title);
+                                newPost.child("Image").setValue(downloadUrl.toString());
+                                newPost.child("Category").setValue(category);
+                                newPost.child("Description_1").setValue(description_1);
+                                newPost.child("Description_2").setValue(description_2);
+                                newPost.child("Price").setValue(price);
+
+                                String key = databaseReference.child("Post").push().getKey();
+
+                                mProgress.dismiss();
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
+
+                                //Upload in Books
+                                DatabaseReference newPostE = databaseReference.child("Books").child(key).push();
+
+                                newPostE.child("Title").setValue(title);
+                                newPostE.child("Image").setValue(downloadUrl.toString());
+                                newPostE.child("Category").setValue(category);
+                                newPostE.child("Description_1").setValue(description_1);
+                                newPostE.child("Description_2").setValue(description_2);
+                                newPostE.child("Price").setValue(price);
+
+                                //Upload under user
+                                String user_id = mAuth.getCurrentUser().getUid();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                myPost.child("Title").setValue(title);
+                                myPost.child("Image").setValue(downloadUrl.toString());
+                                myPost.child("Category").setValue(category);
+                                myPost.child("Description_1").setValue(description_1);
+                                myPost.child("Description_2").setValue(description_2);
+                                myPost.child("Price").setValue(price);
+                            }
+
+                            else if(category.equals("Miscellaneous")){
+
+                                description_1 = company_name.getText().toString().trim();
+                                description_2 = device_specification.getText().toString().trim();
+
+                                DatabaseReference newPost = databaseReference.child("Post");
+
+                                newPost.child("Title").setValue(title);
+                                newPost.child("Image").setValue(downloadUrl.toString());
+                                newPost.child("Category").setValue(category);
+                                newPost.child("Description_1").setValue(description_1);
+                                newPost.child("Description_2").setValue(description_2);
+                                newPost.child("Price").setValue(price);
+
+                                String key = databaseReference.child("Post").push().getKey();
+
+                                mProgress.dismiss();
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
+
+                                //Upload in Books
+                                DatabaseReference newPostE = databaseReference.child("Miscellaneous").child(key).push();
+
+                                newPostE.child("Title").setValue(title);
+                                newPostE.child("Image").setValue(downloadUrl.toString());
+                                newPostE.child("Category").setValue(category);
+                                newPostE.child("Description_1").setValue(description_1);
+                                newPostE.child("Description_2").setValue(description_2);
+                                newPostE.child("Price").setValue(price);
+
+                                //Upload under user
+                                String user_id = mAuth.getCurrentUser().getUid();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                myPost.child("Title").setValue(title);
+                                myPost.child("Image").setValue(downloadUrl.toString());
+                                myPost.child("Category").setValue(category);
+                                myPost.child("Description_1").setValue(description_1);
+                                myPost.child("Description_2").setValue(description_2);
+                                myPost.child("Price").setValue(price);
+
+                            }
+                        }
+                    });
+            filepath.putFile(imageUri).addOnFailureListener((new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Intent homeintent = new Intent(PostActivity.this, HomeActivity.class);
+                    homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeintent);
+                    Toast.makeText(PostActivity.this, "Unable to Upload Files...", Toast.LENGTH_LONG).show();
+                }
+            }));
+
         }catch (Exception e){
             Toast.makeText(PostActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
             Log.e("Error:",e.getMessage());

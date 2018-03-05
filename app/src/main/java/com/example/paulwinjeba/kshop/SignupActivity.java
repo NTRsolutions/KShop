@@ -44,8 +44,10 @@ public class SignupActivity extends AppCompatActivity {
         passField = (EditText) findViewById(R.id.password);
         repassField = (EditText) findViewById(R.id.repassword);
         addr = (EditText) findViewById(R.id.address);
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         mProgress = new ProgressDialog(this);
         signupBtn=(Button)findViewById(R.id.registerbtn);
@@ -92,8 +94,8 @@ public class SignupActivity extends AppCompatActivity {
                         DatabaseReference current_user_db = mDatabase.child(user_id);
 
                         current_user_db.child("Name").setValue(name);
-                        current_user_db.child("Phone Number").setValue(phonenumber);
-                        current_user_db.child("Email ID").setValue(email);
+                        current_user_db.child("Phone_Number").setValue(phonenumber);
+                        current_user_db.child("Email_ID").setValue(email);
                         current_user_db.child("Address").setValue(address);
 
                         mProgress.dismiss();

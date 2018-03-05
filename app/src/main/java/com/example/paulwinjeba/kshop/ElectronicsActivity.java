@@ -45,7 +45,7 @@ public class ElectronicsActivity extends AppCompatActivity
         setContentView(R.layout.activity_electronics);
 
         //Change the database tree name :child
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Electronics");
         mAuth = FirebaseAuth.getInstance();
 
         electronics_post = (RecyclerView) findViewById(R.id.electronics_view);
@@ -63,7 +63,6 @@ public class ElectronicsActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
@@ -71,7 +70,7 @@ public class ElectronicsActivity extends AppCompatActivity
         super.onStart();
         FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder>(
                 Blog.class,
-                R.layout.post_row,
+                R.layout.activity_electronics,
                 ElectronicsActivity.BlogViewHolder.class,
                 databaseReference
         ) {
@@ -144,14 +143,32 @@ public class ElectronicsActivity extends AppCompatActivity
 
             if (id == R.id.electronics) {
                 // Handle the electronics action
+                final Intent electronic = new Intent(ElectronicsActivity.this,ElectronicsActivity.class);
+                startActivity(electronic);
 
             } else if (id == R.id.clothes) {
+                final Intent electronic = new Intent(ElectronicsActivity.this,ClothesActivity.class);
+                startActivity(electronic);
 
             } else if (id == R.id.bike) {
+                final Intent electronic = new Intent(ElectronicsActivity.this,BikesActivity.class);
+                startActivity(electronic);
 
             } else if (id == R.id.book) {
+                final Intent electronic = new Intent(ElectronicsActivity.this,BooksActivity.class);
+                startActivity(electronic);
 
-            } else if (id == R.id.my_profile) {
+            } else if(id == R.id.miscellaneous){
+                final Intent electronic = new Intent(this,MiscellaneousActivity.class);
+                startActivity(electronic);
+
+            } else if (id == R.id.myprofile) {
+                final Intent upload = new Intent(ElectronicsActivity.this,MyProfileActivity.class);
+                startActivity(upload);
+
+            } else if(id == R.id.mypost){
+                final Intent upload = new Intent(ElectronicsActivity.this,MyPostActivity.class);
+                startActivity(upload);
 
             } else if (id == R.id.upload) {
                 if (mAuth.getCurrentUser() != null) {
@@ -229,5 +246,4 @@ public class ElectronicsActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
-
 }

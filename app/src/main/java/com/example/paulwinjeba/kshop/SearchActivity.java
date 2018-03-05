@@ -35,10 +35,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class SearchActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
-    private RecyclerView PostList,ResultList;
+    private RecyclerView ResultList;
 
     boolean isOnline;
     FirebaseAuth mAuth;
@@ -50,22 +50,27 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_search);
+
+        search_text = (EditText) findViewById(R.id.search);
+        Button fab = (Button) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchtext = search_text.getText().toString();
+                firebaseProductSearch(searchtext);
+            }
+        });
+
+        ResultList = (RecyclerView) findViewById(R.id.search_list);
+        ResultList.setHasFixedSize(true);
+        ResultList.setLayoutManager(new LinearLayoutManager(this ));
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
         mAuth = FirebaseAuth.getInstance();
 
-        //String display = String.valueOf(mAuth.getCurrentUser());
-
-        PostList = (RecyclerView) findViewById(R.id.post_list);
-        PostList.setHasFixedSize(true);
-        PostList.setLayoutManager(new LinearLayoutManager(this));
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        final ConnectivityManager connectivityManager = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE));
-        isOnline = (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected() && connectivityManager.getActiveNetworkInfo().isAvailable());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,87 +80,51 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        try {
-            if (!isOnline)
-            {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("No Internet");
-                alertDialogBuilder.setMessage("Please check your Internet Connection and try again.");
-                alertDialogBuilder.setPositiveButton("Reload",new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int arg1) {
-                        Toast.makeText(HomeActivity.this,"Reconnecting",Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                alertDialogBuilder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally {
-
-        }
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
-                Blog.class,
-                R.layout.post_row,
-                BlogViewHolder.class,
-                databaseReference
+    private void firebaseProductSearch(String search) {
+
+        Query firebaseSearchQuery = databaseReference.orderByChild("Tiitle").startAt(search).endAt(search+ "\uf8ff");
+        FirebaseRecyclerAdapter<List, ListViewHolder> firebaseSearchAdapter = new FirebaseRecyclerAdapter<List, ListViewHolder>(
+                List.class,
+                R.layout.list_layout,
+                ListViewHolder.class,
+                firebaseSearchQuery
         ) {
             @Override
-            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+            protected void populateViewHolder(ListViewHolder viewHolder, List model,int position){
 
-                viewHolder.setTitle(model.getTitle());
-                viewHolder.setPrice(model.getPrice());
-                viewHolder.setImage(getApplicationContext(),model.getImage());
+                viewHolder.setDetails(getApplicationContext(),model.getTitle(),model.getPrice(),model.getImage());
+
             }
         };
 
-        PostList.setAdapter(firebaseRecyclerAdapter);
+        ResultList.setAdapter(firebaseSearchAdapter);
     }
 
-    public static class BlogViewHolder extends RecyclerView.ViewHolder{
+
+    // CLass View Holder for search : List
+    public class ListViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
 
-        public BlogViewHolder(View itemView) {
-                super(itemView);
-                mView = itemView;
+        public ListViewHolder(View itemView) {
+            super(itemView);
+
+            mView = itemView;
         }
 
-        public void setTitle(String Title){
-            TextView post_title = (TextView) mView.findViewById(R.id.post_title);
-            post_title.setText(Title);
-        }
+        public void setDetails(Context ctx,String Title,String Price,String Image){
+            TextView search_title = (TextView) mView.findViewById(R.id.list_title);
+            TextView search_price = (TextView) mView.findViewById(R.id.list_price);
+            ImageView search_img = (ImageView) mView.findViewById(R.id.list_img);
 
-        public void setPrice(String Price){
-            TextView post_price = (TextView) mView.findViewById(R.id.post_price);
-            post_price.setText(Price);
-        }
+            search_title.setText(Title);
+            search_price.setText(Price);
 
-        public void setImage(Context ctx,String Image){
-            ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.with(ctx.getApplicationContext()).load(Image).into(post_image);
-            //Glide.with(HomeActivity.this).load(Image).dontAnimate().into(post_image);
-            //Picasso.with(ctx.getApplicationContext()).load(Image).into(post_image);
+            Glide.with(ctx).load(Image).into(search_img);
         }
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -198,36 +167,36 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.electronics) {
             // Handle the electronics action
-            final Intent electronic = new Intent(HomeActivity.this,ElectronicsActivity.class);
+            final Intent electronic = new Intent(SearchActivity.this,ElectronicsActivity.class);
             startActivity(electronic);
         } else if (id == R.id.clothes) {
-            final Intent upload = new Intent(HomeActivity.this,ClothesActivity.class);
+            final Intent upload = new Intent(SearchActivity.this,ClothesActivity.class);
             startActivity(upload);
 
         } else if (id == R.id.bike) {
-            final Intent upload = new Intent(HomeActivity.this,BikesActivity.class);
+            final Intent upload = new Intent(SearchActivity.this,BikesActivity.class);
             startActivity(upload);
 
         } else if (id == R.id.book) {
-            final Intent upload = new Intent(HomeActivity.this,BooksActivity.class);
+            final Intent upload = new Intent(SearchActivity.this,BooksActivity.class);
             startActivity(upload);
 
         } else if(id == R.id.miscellaneous){
-            final Intent electronic = new Intent(HomeActivity.this,MiscellaneousActivity.class);
+            final Intent electronic = new Intent(SearchActivity.this,MiscellaneousActivity.class);
             startActivity(electronic);
 
         } else if (id == R.id.myprofile) {
-            final Intent upload = new Intent(HomeActivity.this,MyProfileActivity.class);
+            final Intent upload = new Intent(SearchActivity.this,MyProfileActivity.class);
             startActivity(upload);
 
         } else if(id == R.id.mypost){
-            final Intent upload = new Intent(HomeActivity.this,MyPostActivity.class);
+            final Intent upload = new Intent(SearchActivity.this,MyPostActivity.class);
             startActivity(upload);
 
         } else if (id == R.id.upload) {
             if (mAuth.getCurrentUser() != null) {
                 // User is logged in
-                final Intent upload = new Intent(HomeActivity.this,PostActivity.class);
+                final Intent upload = new Intent(SearchActivity.this,PostActivity.class);
                 startActivity(upload);
             }
             else
@@ -236,7 +205,7 @@ public class HomeActivity extends AppCompatActivity
                     LayoutInflater inflater = getLayoutInflater();
                     View alertLayout;
                     alertLayout = inflater.inflate(R.layout.activity_inflater, null);
-                    AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(SearchActivity.this);
                     //Set the button id
                     login = (Button) alertLayout.findViewById(R.id.log_in);
                     signin = (Button) alertLayout.findViewById(R.id.sign_in);
@@ -249,7 +218,7 @@ public class HomeActivity extends AppCompatActivity
                     login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent nxtlogin = new Intent(HomeActivity.this, PostLoginActivity.class);
+                            Intent nxtlogin = new Intent(SearchActivity.this, PostLoginActivity.class);
                             Log.d("login", "testing");
                             startActivity(nxtlogin);
                         }
@@ -259,7 +228,7 @@ public class HomeActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             Log.d("sign in checking", "tested");
-                            final Intent nxtsignin = new Intent(HomeActivity.this, PostSigninActivity.class);
+                            final Intent nxtsignin = new Intent(SearchActivity.this, PostSigninActivity.class);
                             startActivity(nxtsignin);
                         }
                     });
@@ -287,9 +256,9 @@ public class HomeActivity extends AppCompatActivity
 
             //End user session
             FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(HomeActivity.this, FirstpageActivity.class);
+            Intent homeagain = new Intent(SearchActivity.this, FirstpageActivity.class);
             homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(HomeActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+            Toast.makeText(SearchActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
             startActivity(homeagain);
 
         }else if (id == R.id.sett) {
