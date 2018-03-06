@@ -126,6 +126,7 @@ public class PostActivity extends AppCompatActivity {
         category.setAdapter(adapter_cat);
         //Sppinner Drop down elements for spinner
         List<String> categories = new ArrayList<String>();
+        categories.add("Select One Category");
         categories.add("Electronics");
         categories.add("Clothes");
         categories.add("Bikes");
@@ -535,6 +536,10 @@ public class PostActivity extends AppCompatActivity {
             Log.e("Error:",e.getMessage());
         }
         finally {
+            Intent homeintent = new Intent(PostActivity.this, HomeActivity.class);
+            homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeintent);
+            Toast.makeText(PostActivity.this, "Unable to Upload Files...", Toast.LENGTH_LONG).show();
 
         }//NOT TO GO BACK
     }

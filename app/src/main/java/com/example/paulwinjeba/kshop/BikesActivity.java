@@ -138,8 +138,11 @@ public class BikesActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if(id == R.id.searches){
+            final Intent search = new Intent(BikesActivity.this, SearchActivity.class);
+            startActivity(search);
 
-        if (id == R.id.electronics) {
+        } else if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(BikesActivity.this, ElectronicsActivity.class);
             startActivity(electronic);

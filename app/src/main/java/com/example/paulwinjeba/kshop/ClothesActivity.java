@@ -140,7 +140,11 @@ public class ClothesActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.electronics) {
+        if(id == R.id.searches){
+            final Intent search = new Intent(ClothesActivity.this, SearchActivity.class);
+            startActivity(search);
+
+        } else if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(ClothesActivity.this,ElectronicsActivity.class);
             startActivity(electronic);

@@ -141,6 +141,11 @@ public class ElectronicsActivity extends AppCompatActivity
             // Handle navigation view item clicks here.
             int id = item.getItemId();
 
+            if(id == R.id.searches){
+                final Intent search = new Intent(ElectronicsActivity.this, SearchActivity.class);
+                startActivity(search);
+
+            } else
             if (id == R.id.electronics) {
                 // Handle the electronics action
                 final Intent electronic = new Intent(ElectronicsActivity.this,ElectronicsActivity.class);

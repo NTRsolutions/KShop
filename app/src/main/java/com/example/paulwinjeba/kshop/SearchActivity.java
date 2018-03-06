@@ -39,8 +39,7 @@ public class SearchActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private RecyclerView ResultList;
-
-    boolean isOnline;
+    
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
@@ -165,7 +164,11 @@ public class SearchActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.electronics) {
+        if(id == R.id.searches){
+            final Intent search = new Intent(this, SearchActivity.class);
+            startActivity(search);
+
+        } else if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(SearchActivity.this,ElectronicsActivity.class);
             startActivity(electronic);
