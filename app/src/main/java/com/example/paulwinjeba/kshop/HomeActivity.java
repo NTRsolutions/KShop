@@ -196,6 +196,11 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        if(id == R.id.searches){
+            final Intent search = new Intent(HomeActivity.this, SearchActivity.class);
+            startActivity(search);
+
+        } else
         if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(HomeActivity.this,ElectronicsActivity.class);
@@ -217,9 +222,63 @@ public class HomeActivity extends AppCompatActivity
             startActivity(electronic);
 
         } else if (id == R.id.myprofile) {
-            final Intent upload = new Intent(HomeActivity.this,MyProfileActivity.class);
-            startActivity(upload);
+            if (mAuth.getCurrentUser() != null) {
+                final Intent upload = new Intent(HomeActivity.this, MyProfileActivity.class);
+                startActivity(upload);
+            }
+            else{
+                try {
+                    LayoutInflater inflater = getLayoutInflater();
+                    View alertLayout;
+                    alertLayout = inflater.inflate(R.layout.activity_inflater, null);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+                    //Set the button id
+                    login = (Button) alertLayout.findViewById(R.id.log_in);
+                    signin = (Button) alertLayout.findViewById(R.id.sign_in);
+                    alert.setTitle("Login or Signin");
+                    // this is set the view from XML inside AlertDialog
+                    alert.setView(alertLayout);
+                    // disallow cancel of AlertDialog on click of back button and outside touch
+                    alert.setCancelable(false);
 
+                    login.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent nxtlogin = new Intent(HomeActivity.this, PostLoginActivity.class);
+                            Log.d("login", "testing");
+                            startActivity(nxtlogin);
+                        }
+                    });
+
+                    signin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d("sign in checking", "tested");
+                            final Intent nxtsignin = new Intent(HomeActivity.this, PostSigninActivity.class);
+                            startActivity(nxtsignin);
+                        }
+                    });
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                            /*final Intent cancel = new Intent(HomeActivity.this, HomeActivity.class);
+                            startActivity(cancel);*/
+
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+                finally {
+
+                }
+            }
         } else if(id == R.id.mypost){
             final Intent upload = new Intent(HomeActivity.this,MyPostActivity.class);
             startActivity(upload);

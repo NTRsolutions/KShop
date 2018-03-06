@@ -51,7 +51,7 @@ public class MyPostActivity extends AppCompatActivity
         edit = (Button) findViewById(R.id.edit);
         delete = (Button) findViewById(R.id.delete);
 
-        MyPostList = (RecyclerView) findViewById(R.id.my_post);
+        MyPostList = (RecyclerView) findViewById(R.id.my_posts);
         MyPostList.setHasFixedSize(true);
         MyPostList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,7 +73,7 @@ public class MyPostActivity extends AppCompatActivity
         super.onStart();
         FirebaseRecyclerAdapter<MyBlog, MyPostActivity.MyBlogViewHolder> my_firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyBlog, MyPostActivity.MyBlogViewHolder>(
                 MyBlog.class,
-                R.layout.my_post,
+                R.layout.my_posts,
                 MyPostActivity.MyBlogViewHolder.class,
                 databaseReference
         ) {
@@ -176,7 +176,11 @@ public class MyPostActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.electronics) {
+        if(id == R.id.searches){
+            final Intent search = new Intent(MyPostActivity.this, SearchActivity.class);
+            startActivity(search);
+
+        } else if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(MyPostActivity.this,ElectronicsActivity.class);
             startActivity(electronic);

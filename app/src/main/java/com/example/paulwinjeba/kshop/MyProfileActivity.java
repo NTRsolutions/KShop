@@ -1,6 +1,5 @@
 package com.example.paulwinjeba.kshop;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -19,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +25,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 public class MyProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +46,7 @@ public class MyProfileActivity extends AppCompatActivity
         myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid);
 
-        myProfile = (RecyclerView) findViewById(R.id.myprofile);
+        myProfile = (RecyclerView) findViewById(R.id.my_profiles);
         myProfile.setHasFixedSize(true);
         myProfile.setLayoutManager(new LinearLayoutManager(this));
 
@@ -71,7 +68,7 @@ public class MyProfileActivity extends AppCompatActivity
         super.onStart();
         FirebaseRecyclerAdapter<MyProfile, MyProfileActivity.MyProfileViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyProfile, MyProfileActivity.MyProfileViewHolder>(
                 MyProfile.class,
-                R.layout.my_profile,
+                R.layout.my_profiles,
                 MyProfileViewHolder.class,
                 databaseReference
         ) {
@@ -158,8 +155,11 @@ public class MyProfileActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if(id == R.id.searches){
+            final Intent search = new Intent(MyProfileActivity.this, SearchActivity.class);
+            startActivity(search);
 
-        if (id == R.id.electronics) {
+        } else if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(MyProfileActivity.this,ElectronicsActivity.class);
             startActivity(electronic);

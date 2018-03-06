@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/searches"
+            android:icon="@drawable/search"
+            android:title="Search"/>
+        <item
             android:id="@+id/electronics"
             android:icon="@drawable/electronic"
             android:title="Electronics" />
@@ -37,7 +41,7 @@
             <item
                 android:id="@+id/mypost"
                 android:title="My Post"
-                android:visibility="gone">
+                android:icon="@drawable/add_img">
             </item>
             <item
                 android:id="@+id/upload"
