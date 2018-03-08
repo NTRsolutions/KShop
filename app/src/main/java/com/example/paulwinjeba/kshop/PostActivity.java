@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
+
     boolean doubleBackToExitPressedOnce = false;
 
     TextView mstlabel;
@@ -45,15 +47,15 @@ public class PostActivity extends AppCompatActivity {
     private Uri imageUri = null;
     private final int PICK_IMAGE_REQUEST = 7;
     private Spinner category,cloth_type,cloth_size;
-    private ProgressDialog mProgress;
-    private String spin_category;
-    private String desc_cloth_1,desc_cloth_2;
+    //private ProgressDialog mProgress;
+    private String item,clothtype1,clothsize1,key;
 
     String description_1,description_2;
     //FirebaseStorage storage;
     StorageReference storageReference;
     DatabaseReference databaseReference,mDatabase;
     private FirebaseAuth mAuth;
+    String uuid = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +63,13 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-
+        uuid=mAuth.getCurrentUser().getUid().toString();
 
         post_img = (ImageButton) findViewById(R.id.post_img);
-        mProgress = new ProgressDialog(this);
+        //mProgress = new ProgressDialog(this);
         post_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,13 +119,7 @@ public class PostActivity extends AppCompatActivity {
 
         //Spinner element 1
         category = (Spinner) findViewById(R.id.category);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter adapter_cat = ArrayAdapter.createFromResource(this,
-                R.array.category, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter_cat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        category.setAdapter(adapter_cat);
+        //spinner click listener
         //Sppinner Drop down elements for spinner
         List<String> categories = new ArrayList<String>();
         categories.add("Select One Category");
@@ -132,19 +128,14 @@ public class PostActivity extends AppCompatActivity {
         categories.add("Bikes");
         categories.add("Books");
         categories.add("Miscellaneous");
+        //CReating adapter for spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(adapter);
 
         //Spinner element 2
         cloth_type = (Spinner) findViewById(R.id.spinner_clothes);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter adapter_clothes = ArrayAdapter.createFromResource(this,
-                R.array.cloth, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter_clothes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        cloth_type.setAdapter(adapter_clothes);
         List<String> clothes_type = new ArrayList<String>();
         clothes_type.add("Cotton");
         clothes_type.add("Wool");
@@ -153,19 +144,23 @@ public class PostActivity extends AppCompatActivity {
         clothes_type.add("Linen");
         clothes_type.add("Chiffon");
         clothes_type.add("Polyester");
-        ArrayAdapter<String> clothtype = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, clothes_type);
+        final ArrayAdapter<String> clothtype = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, clothes_type);
         clothtype.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cloth_type.setAdapter(clothtype);
+        cloth_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                clothtype1 = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //Spinner element 3
         cloth_size = (Spinner) findViewById(R.id.spinner_size);
-// Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter adapter_size = ArrayAdapter.createFromResource(this,
-                R.array.size, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter_size.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        cloth_size.setAdapter(adapter_size);
         List<String> clothsize = new ArrayList<String>();
         clothsize.add("S");
         clothsize.add("M");
@@ -175,12 +170,22 @@ public class PostActivity extends AppCompatActivity {
         ArrayAdapter<String> clothsizes = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, clothsize);
         clothsizes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cloth_size.setAdapter(clothsizes);
+        cloth_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                clothsize1 = adapterView.getItemAtPosition(i).toString();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String item = adapterView.getItemAtPosition(i).toString();
+                item = adapterView.getItemAtPosition(i).toString();
                 switch(i) {
                     case 0:
                         mstlabel.setVisibility(View.VISIBLE);
@@ -190,6 +195,16 @@ public class PostActivity extends AppCompatActivity {
 
                     case 1:
                         mstlabel.setVisibility(View.GONE);
+                        case_2.setVisibility(View.GONE);
+                        specific_cloth.setVisibility(View.GONE);
+                        modelname.setVisibility(View.GONE);
+                        case_3.setVisibility(View.GONE);
+                        case3_1.setVisibility(View.GONE);
+                        bookname.setVisibility(View.GONE);
+                        authorname.setVisibility(View.GONE);
+                        bookdesc.setVisibility(View.GONE);
+                        desc.setVisibility(View.GONE);
+
                         companyname.setVisibility(View.VISIBLE);
                         specific.setVisibility(View.VISIBLE);
                         break;
@@ -198,6 +213,13 @@ public class PostActivity extends AppCompatActivity {
                         mstlabel.setVisibility(View.GONE);
                         companyname.setVisibility(View.GONE);
                         specific.setVisibility(View.GONE);
+                        modelname.setVisibility(View.GONE);
+                        case_3.setVisibility(View.GONE);
+                        case3_1.setVisibility(View.GONE);
+                        bookname.setVisibility(View.GONE);
+                        authorname.setVisibility(View.GONE);
+                        bookdesc.setVisibility(View.GONE);
+                        desc.setVisibility(View.GONE);
 
                         case_2.setVisibility(View.VISIBLE);
                         specific_cloth.setVisibility(View.VISIBLE);
@@ -209,6 +231,10 @@ public class PostActivity extends AppCompatActivity {
                         specific.setVisibility(View.GONE);
                         case_2.setVisibility(View.GONE);
                         specific_cloth.setVisibility(View.GONE);
+                        bookname.setVisibility(View.GONE);
+                        authorname.setVisibility(View.GONE);
+                        bookdesc.setVisibility(View.GONE);
+                        desc.setVisibility(View.GONE);
 
                         modelname.setVisibility(View.VISIBLE);
                         case_3.setVisibility(View.VISIBLE);
@@ -224,6 +250,7 @@ public class PostActivity extends AppCompatActivity {
                         modelname.setVisibility(View.GONE);
                         case_3.setVisibility(View.GONE);
                         case3_1.setVisibility(View.GONE);
+                        desc.setVisibility(View.GONE);
 
                         bookname.setVisibility(View.VISIBLE);
                         authorname.setVisibility(View.VISIBLE);
@@ -248,7 +275,8 @@ public class PostActivity extends AppCompatActivity {
 
                     default:
                         break;
-                        //in every case try doing the reverse also i.e if in case they select last and then first then desc is still visible
+                        //DONE
+                    // /in every case try doing the reverse also i.e if in case they select last and then first then desc is still visible
                 }
 
             }
@@ -286,12 +314,12 @@ public class PostActivity extends AppCompatActivity {
 
             final String title = post_title.getText().toString().trim();
             final String price = post_price.getText().toString().trim();
-            final String category = spin_category;
+            final String category = item;
 
 
             /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 
-            mProgress.show();
+            //mProgress.show();
 
             StorageReference filepath = storageReference.child("Post_Images").child(imageUri.getLastPathSegment());
 
@@ -305,7 +333,7 @@ public class PostActivity extends AppCompatActivity {
                                 description_1 = company_name.getText().toString().trim();
                                 description_2 = device_specification.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post");
+                                DatabaseReference newPost = databaseReference.child("Post").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -313,16 +341,13 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child("Description_1").setValue(description_1);
                                 newPost.child("Description_2").setValue(description_2);
                                 newPost.child("Price").setValue(price);
+                                newPost.child("UID").setValue(uuid);
 
                                 String key = databaseReference.child("Post").push().getKey();
 
-                                mProgress.dismiss();
-                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
-                                startActivity(home_again);
-                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
-
+                                //mProgress.dismiss();
                                 //Upload in Electronics
-                                DatabaseReference newPostE = databaseReference.child("Electronics").child(key).push();
+                                DatabaseReference newPostE = databaseReference.child("Electronics").child(key);
 
                                 newPostE.child("Title").setValue(title);
                                 newPostE.child("Image").setValue(downloadUrl.toString());
@@ -333,21 +358,25 @@ public class PostActivity extends AppCompatActivity {
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
                                 myPost.child("Title").setValue(title);
                                 myPost.child("Image").setValue(downloadUrl.toString());
                                 myPost.child("Category").setValue(category);
                                 myPost.child("Description_1").setValue(description_1);
                                 myPost.child("Description_2").setValue(description_2);
                                 myPost.child("Price").setValue(price);
+
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
 
                             }
 
                             else if(category.equals("Clothes")) {
-                                description_1 = "Material : " + desc_cloth_2 + " Size : " + desc_cloth_1;
+                                description_1 = "Material : " + clothtype1 + " Size : " + clothsize1;
                                 description_2 = specific_clothes.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post");
+                                DatabaseReference newPost = databaseReference.child("Post").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -355,16 +384,13 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child("Description_1").setValue(description_1);
                                 newPost.child("Description_2").setValue(description_2);
                                 newPost.child("Price").setValue(price);
+                                newPost.child("UID").setValue(uuid);
 
-                                String key = databaseReference.child("Post").push().getKey();
+                                key = databaseReference.child("Post").push().getKey();
 
-                                mProgress.dismiss();
-                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
-                                startActivity(home_again);
-                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
-
-                                //Upload in Electronics
-                                DatabaseReference newPostE = databaseReference.child("Clothes").child(key).push();
+                                //mProgress.dismiss();
+                                    //Upload in Electronics
+                                DatabaseReference newPostE = databaseReference.child("Clothes").child(key);
 
                                 newPostE.child("Title").setValue(title);
                                 newPostE.child("Image").setValue(downloadUrl.toString());
@@ -375,13 +401,17 @@ public class PostActivity extends AppCompatActivity {
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
                                 myPost.child("Title").setValue(title);
                                 myPost.child("Image").setValue(downloadUrl.toString());
                                 myPost.child("Category").setValue(category);
                                 myPost.child("Description_1").setValue(description_1);
                                 myPost.child("Description_2").setValue(description_2);
                                 myPost.child("Price").setValue(price);
+
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
 
                             }
 
@@ -395,7 +425,7 @@ public class PostActivity extends AppCompatActivity {
                                 description_1 = "Model : "+desc_model+" with Gear : "+desc_gear+ " Number of gears : "+nogear+ " , with Brakes : " +brake_s+ " and Rims : "+rim_s;
                                 description_2 = description_bike.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post");
+                                DatabaseReference newPost = databaseReference.child("Post").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -403,16 +433,13 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child("Description_1").setValue(description_1);
                                 newPost.child("Description_2").setValue(description_2);
                                 newPost.child("Price").setValue(price);
+                                newPost.child("UID").setValue(uuid);
 
-                                String key = databaseReference.child("Post").push().getKey();
+                                key = databaseReference.child("Post").push().getKey();
 
-                                mProgress.dismiss();
-                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
-                                startActivity(home_again);
-                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
-
+                                //mProgress.dismiss();
                                 //Upload in Bikes
-                                DatabaseReference newPostE = databaseReference.child("Bikes").child(key).push();
+                                DatabaseReference newPostE = databaseReference.child("Bikes").child(key);
 
                                 newPostE.child("Title").setValue(title);
                                 newPostE.child("Image").setValue(downloadUrl.toString());
@@ -423,13 +450,17 @@ public class PostActivity extends AppCompatActivity {
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
                                 myPost.child("Title").setValue(title);
                                 myPost.child("Image").setValue(downloadUrl.toString());
                                 myPost.child("Category").setValue(category);
                                 myPost.child("Description_1").setValue(description_1);
                                 myPost.child("Description_2").setValue(description_2);
                                 myPost.child("Price").setValue(price);
+
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
 
                             }
 
@@ -440,7 +471,7 @@ public class PostActivity extends AppCompatActivity {
                                 description_1 = "Book : "+bookname+ " Author : "+author;
                                 description_2 = book_desc.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post");
+                                DatabaseReference newPost = databaseReference.child("Post").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -448,16 +479,14 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child("Description_1").setValue(description_1);
                                 newPost.child("Description_2").setValue(description_2);
                                 newPost.child("Price").setValue(price);
+                                newPost.child("UID").setValue(uuid);
 
-                                String key = databaseReference.child("Post").push().getKey();
+                                key = databaseReference.child("Post").push().getKey();
 
-                                mProgress.dismiss();
-                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
-                                startActivity(home_again);
-                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
+                                //mProgress.dismiss();
 
                                 //Upload in Books
-                                DatabaseReference newPostE = databaseReference.child("Books").child(key).push();
+                                DatabaseReference newPostE = databaseReference.child("Books").child(key);
 
                                 newPostE.child("Title").setValue(title);
                                 newPostE.child("Image").setValue(downloadUrl.toString());
@@ -468,21 +497,25 @@ public class PostActivity extends AppCompatActivity {
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
                                 myPost.child("Title").setValue(title);
                                 myPost.child("Image").setValue(downloadUrl.toString());
                                 myPost.child("Category").setValue(category);
                                 myPost.child("Description_1").setValue(description_1);
                                 myPost.child("Description_2").setValue(description_2);
                                 myPost.child("Price").setValue(price);
+
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
                             }
 
                             else if(category.equals("Miscellaneous")){
 
-                                description_1 = company_name.getText().toString().trim();
-                                description_2 = device_specification.getText().toString().trim();
+                                description_1 = post_title.getText().toString().trim();
+                                description_2 = description.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post");
+                                DatabaseReference newPost = databaseReference.child("Post").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -490,16 +523,14 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child("Description_1").setValue(description_1);
                                 newPost.child("Description_2").setValue(description_2);
                                 newPost.child("Price").setValue(price);
+                                newPost.child("UID").setValue(uuid);
 
-                                String key = databaseReference.child("Post").push().getKey();
+                                key = databaseReference.child("Post").push().getKey();
 
-                                mProgress.dismiss();
-                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
-                                startActivity(home_again);
-                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
+                                //mProgress.dismiss();
 
-                                //Upload in Books
-                                DatabaseReference newPostE = databaseReference.child("Miscellaneous").child(key).push();
+                                //Upload in Miscellaneous
+                                DatabaseReference newPostE = databaseReference.child("Miscellaneous").child(key);
 
                                 newPostE.child("Title").setValue(title);
                                 newPostE.child("Image").setValue(downloadUrl.toString());
@@ -510,13 +541,17 @@ public class PostActivity extends AppCompatActivity {
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key).push();
+                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
                                 myPost.child("Title").setValue(title);
                                 myPost.child("Image").setValue(downloadUrl.toString());
                                 myPost.child("Category").setValue(category);
                                 myPost.child("Description_1").setValue(description_1);
                                 myPost.child("Description_2").setValue(description_2);
                                 myPost.child("Price").setValue(price);
+
+                                Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
+                                startActivity(home_again);
+                                Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
 
                             }
                         }
@@ -536,15 +571,16 @@ public class PostActivity extends AppCompatActivity {
             Log.e("Error:",e.getMessage());
         }
         finally {
-            Intent homeintent = new Intent(PostActivity.this, HomeActivity.class);
+            /*Intent homeintent = new Intent(PostActivity.this, HomeActivity.class);
             homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeintent);
-            Toast.makeText(PostActivity.this, "Unable to Upload Files...", Toast.LENGTH_LONG).show();
-
+            startActivity(homeintent);*/
+            Toast.makeText(PostActivity.this, "Processing...", Toast.LENGTH_LONG).show();
+            finish();
         }//NOT TO GO BACK
     }
     @Override
     public void onBackPressed(){
         //Toast.makeText(PostActivity.this,"Cancelled...Press back again to Exit.",Toast.LENGTH_LONG).show();
+        //super.onBackPressed();
     }
 }

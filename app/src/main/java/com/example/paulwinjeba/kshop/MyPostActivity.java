@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.common.hash.HashingOutputStream;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,7 +35,7 @@ public class MyPostActivity extends AppCompatActivity
 
     private RecyclerView MyPostList;
 
-    boolean isOnline;
+    String post_key= null;
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
@@ -45,8 +46,9 @@ public class MyPostActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_post);
 
         mAuth = FirebaseAuth.getInstance();
-        String myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid).child("My Post");
+        //String post_key = getIntent().getExtras().getString("blog_id");
 
         edit = (Button) findViewById(R.id.edit);
         delete = (Button) findViewById(R.id.delete);
@@ -66,19 +68,31 @@ public class MyPostActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference.child(post_key).removeValue();
+
+                Intent homeagain = new Intent(MyPostActivity.this, HomeActivity.class);
+                startActivity(homeagain);
+            }
+        });*/
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        FirebaseRecyclerAdapter<MyBlog, MyPostActivity.MyBlogViewHolder> my_firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyBlog, MyPostActivity.MyBlogViewHolder>(
+        FirebaseRecyclerAdapter<MyBlog, MyBlogViewHolder> my_firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyBlog, MyBlogViewHolder>(
                 MyBlog.class,
                 R.layout.my_posts,
-                MyPostActivity.MyBlogViewHolder.class,
+                MyBlogViewHolder.class,
                 databaseReference
         ) {
             @Override
             protected void populateViewHolder(MyPostActivity.MyBlogViewHolder viewHolder, MyBlog model, int position) {
+
+                post_key = getRef(position).toString();
 
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setPrice(model.getPrice());
@@ -90,8 +104,8 @@ public class MyPostActivity extends AppCompatActivity
         };
 
         MyPostList.setAdapter(my_firebaseRecyclerAdapter);
-
     }
+
 
     public static class MyBlogViewHolder extends RecyclerView.ViewHolder{
 
@@ -209,7 +223,7 @@ public class MyPostActivity extends AppCompatActivity
             startActivity(upload);
 
         }else if (id == R.id.upload) {
-            if (mAuth.getCurrentUser() != null) {
+            if (mAuth.getCurrentUser().getUid() != null) {
                 // User is logged in
                 final Intent upload = new Intent(MyPostActivity.this,PostActivity.class);
                 startActivity(upload);
@@ -264,17 +278,21 @@ public class MyPostActivity extends AppCompatActivity
                 {
                     Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
-
             }
         }
         else if (id == R.id.logout) {
 
             //End user session
-            FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(MyPostActivity.this, FirstpageActivity.class);
-            homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(MyPostActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
-            startActivity(homeagain);
+            if(mAuth.getCurrentUser() != null){
+                //End users session
+                FirebaseAuth.getInstance().signOut();
+                Intent homeagain = new Intent(MyPostActivity.this, FirstpageActivity.class);
+                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(MyPostActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                startActivity(homeagain);
+            }
+            else
+                Toast.makeText(MyPostActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
 
         }else if (id == R.id.sett) {
 

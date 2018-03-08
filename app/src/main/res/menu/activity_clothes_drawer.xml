@@ -25,7 +25,7 @@
             android:title="Books" />
         <item
             android:id="@+id/miscellaneous"
-            android:icon="@drawable/add"
+            android:icon="@drawable/misc"
             android:title="Miscellaneous"/>
     </group>
 

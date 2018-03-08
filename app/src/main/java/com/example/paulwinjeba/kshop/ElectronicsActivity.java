@@ -70,7 +70,7 @@ public class ElectronicsActivity extends AppCompatActivity
         super.onStart();
         FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder>(
                 Blog.class,
-                R.layout.activity_electronics,
+                R.layout.post_row,
                 ElectronicsActivity.BlogViewHolder.class,
                 databaseReference
         ) {
@@ -237,11 +237,17 @@ public class ElectronicsActivity extends AppCompatActivity
             else if (id == R.id.logout) {
 
                 //End user session
-                FirebaseAuth.getInstance().signOut();
-                Intent homeagain = new Intent(ElectronicsActivity.this, FirstpageActivity.class);
-                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Toast.makeText(ElectronicsActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
-                startActivity(homeagain);
+                if(mAuth.getCurrentUser() != null){
+                    //End users session
+                    FirebaseAuth.getInstance().signOut();
+                    Intent homeagain = new Intent(ElectronicsActivity.this, FirstpageActivity.class);
+                    homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Toast.makeText(ElectronicsActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                    startActivity(homeagain);
+                }
+                else
+                    Toast.makeText(ElectronicsActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
+
 
             }else if (id == R.id.sett) {
 

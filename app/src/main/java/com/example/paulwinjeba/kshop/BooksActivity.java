@@ -69,7 +69,7 @@ public class BooksActivity extends AppCompatActivity
         super.onStart();
         FirebaseRecyclerAdapter<Blog, BooksActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BooksActivity.BlogViewHolder>(
                 Blog.class,
-                R.layout.activity_books,
+                R.layout.post_row,
                 BooksActivity.BlogViewHolder.class,
                 databaseReference
         ) {
@@ -235,12 +235,16 @@ public class BooksActivity extends AppCompatActivity
         else if (id == R.id.logout) {
 
             //End user session
-            FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(BooksActivity.this, FirstpageActivity.class);
-            homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(BooksActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
-            startActivity(homeagain);
-
+            if(mAuth.getCurrentUser() != null){
+                //End users session
+                FirebaseAuth.getInstance().signOut();
+                Intent homeagain = new Intent(BooksActivity.this, FirstpageActivity.class);
+                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(BooksActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                startActivity(homeagain);
+            }
+            else
+                Toast.makeText(BooksActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
         }else if (id == R.id.sett) {
 
         }

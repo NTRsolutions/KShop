@@ -48,15 +48,17 @@
             android:name=".SignupActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".ElectronicsActivity" />
-        <activity android:name=".BikesActivity"
-            android:theme="@style/AppTheme"
-            android:label="Bikes"/>
+        <activity
+            android:name=".BikesActivity"
+            android:label="Bikes"
+            android:theme="@style/AppTheme" />
         <activity android:name=".BooksActivity" />
         <activity android:name=".ClothesActivity" />
         <activity android:name=".MiscellaneousActivity" />
         <activity android:name=".MyPostActivity" />
         <activity android:name=".MyProfileActivity" />
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".BlogSingleActivity"></activity>
     </application>
 
 </manifest>

@@ -120,9 +120,22 @@ public class HomeActivity extends AppCompatActivity
             @Override
             protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
 
+                final String post_key = getRef(position).toString();
+
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setPrice(model.getPrice());
                 viewHolder.setImage(getApplicationContext(),model.getImage());
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(HomeActivity.this,"Loading...",Toast.LENGTH_LONG).show();
+
+                        Intent singleBlogIntent = new Intent(HomeActivity.this,BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id",post_key);
+                        startActivity(singleBlogIntent);
+                    }
+                });
             }
         };
 
@@ -154,6 +167,7 @@ public class HomeActivity extends AppCompatActivity
             //Glide.with(HomeActivity.this).load(Image).dontAnimate().into(post_image);
             //Picasso.with(ctx.getApplicationContext()).load(Image).into(post_image);
         }
+
     }
 
     @Override
@@ -187,6 +201,8 @@ public class HomeActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);*/
+
+
         return true;
     }
 
@@ -344,12 +360,16 @@ public class HomeActivity extends AppCompatActivity
         }
         else if (id == R.id.logout) {
 
-            //End user session
-            FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(HomeActivity.this, FirstpageActivity.class);
-            homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(HomeActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
-            startActivity(homeagain);
+            if(mAuth.getCurrentUser() != null){
+                //End users session
+                FirebaseAuth.getInstance().signOut();
+                Intent homeagain = new Intent(HomeActivity.this, FirstpageActivity.class);
+                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(HomeActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                startActivity(homeagain);
+            }
+            else
+                Toast.makeText(HomeActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
 
         }else if (id == R.id.sett) {
 
