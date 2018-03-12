@@ -12,7 +12,7 @@
     <string name="passworderror">Enter at least 8 character</string>
     <string name="repassworderror">Password does not match</string>
     <string name="mobileerror">Enter a valid phone number</string>
-    <string name="addrerror">Enter thr full address</string>
+    <string name="addrerror">Enter the full address</string>
     <string name="title_activity_add_content">AddContent</string>
 
     <string-array name="category">

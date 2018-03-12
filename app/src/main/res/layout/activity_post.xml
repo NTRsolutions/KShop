@@ -302,7 +302,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Company Name and Model"
+                    android:hint="Book Name"
                     android:visibility="gone" />
             </android.support.design.widget.TextInputLayout>
 
@@ -319,7 +319,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Specifications About the device :"
+                    android:hint="Author Name :"
                     android:visibility="visible"
                     android:inputType="text" />
             </android.support.design.widget.TextInputLayout>

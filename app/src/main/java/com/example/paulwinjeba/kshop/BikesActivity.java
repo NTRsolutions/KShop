@@ -47,7 +47,7 @@ public class BikesActivity extends AppCompatActivity
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
         mAuth = FirebaseAuth.getInstance();
 
-        post = (RecyclerView) findViewById(R.id.books_view);
+        post = (RecyclerView) findViewById(R.id.bikes_view);
         post.setHasFixedSize(true);
         post.setLayoutManager(new LinearLayoutManager(this));
 
@@ -68,7 +68,7 @@ public class BikesActivity extends AppCompatActivity
         super.onStart();
         FirebaseRecyclerAdapter<Blog, BikesActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BikesActivity.BlogViewHolder>(
                 Blog.class,
-                R.layout.activity_bikes,
+                R.layout.post_row,
                 BikesActivity.BlogViewHolder.class,
                 databaseReference
         ) {
@@ -228,12 +228,16 @@ public class BikesActivity extends AppCompatActivity
         } else if (id == R.id.logout) {
 
             //End user session
-            FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(BikesActivity.this, FirstpageActivity.class);
-            homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(BikesActivity.this, "Logged Out Successfully", Toast.LENGTH_LONG).show();
-            startActivity(homeagain);
-
+            if(mAuth.getCurrentUser() != null){
+                //End users session
+                FirebaseAuth.getInstance().signOut();
+                Intent homeagain = new Intent(BikesActivity.this, FirstpageActivity.class);
+                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(BikesActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                startActivity(homeagain);
+            }
+            else
+                Toast.makeText(BikesActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
         } else if (id == R.id.sett) {
 
         }

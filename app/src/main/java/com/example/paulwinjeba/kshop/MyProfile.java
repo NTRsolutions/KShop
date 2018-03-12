@@ -4,16 +4,16 @@ package com.example.paulwinjeba.kshop;
  * Created by PAULWIN JEBA on 03-03-2018.
  */
 
-public class MyProfile {
+public class Myprofile {
     private String Name;
     private String Phone_Number;
     private String Email_ID;
     private String Address;
 
-    public MyProfile(){
+    public Myprofile(){
 
     }
-    public MyProfile(String name , String phone_number, String email_id, String address){
+    public Myprofile(String name , String phone_number, String email_id, String address){
         Name = name;
         Phone_Number = phone_number;
         Email_ID = email_id;

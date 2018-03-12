@@ -48,15 +48,18 @@ public class SignupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        String karunya= "@karunya.edu";
+        String karunyaedu= "@karunya.edu.in";
+
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         mProgress = new ProgressDialog(this);
         signupBtn=(Button)findViewById(R.id.registerbtn);
         awesomeValidation.addValidation(this, R.id.username, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
-        awesomeValidation.addValidation(this, R.id.email,"^([a-z])+@(karnuya.edu.in)|(karunya.edu)$" , R.string.emailerror);
+        awesomeValidation.addValidation(this, R.id.email,"^[a-z]+"+(karunya)+"|[a-z]+"+(karunyaedu)+"$" , R.string.emailerror);
         awesomeValidation.addValidation(this, R.id.password, "^.{8,}$", R.string.passworderror);//.{8,} //[a-zA-Z]\w{4,15}
         awesomeValidation.addValidation(this, R.id.phno, "^[0-9]{10}$", R.string.mobileerror);
         awesomeValidation.addValidation(this, R.id.repassword,R.id.password, R.string.repassworderror);
-        awesomeValidation.addValidation(this,R.id.address,"^(([a-zA-Z0-9,.]+)*( )+)$",R.string.addrerror);
+        awesomeValidation.addValidation(this,R.id.address,"^(([a-zA-Z0-9, .]+)*)$",R.string.addrerror);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override

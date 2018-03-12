@@ -47,7 +47,7 @@ public class ClothesActivity extends AppCompatActivity
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Clothes");
         mAuth = FirebaseAuth.getInstance();
 
-        post = (RecyclerView) findViewById(R.id.books_view);
+        post = (RecyclerView) findViewById(R.id.clothes_view);
         post.setHasFixedSize(true);
         post.setLayoutManager(new LinearLayoutManager(this));
 
@@ -69,7 +69,7 @@ public class ClothesActivity extends AppCompatActivity
         super.onStart();
         FirebaseRecyclerAdapter<Blog, ClothesActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, ClothesActivity.BlogViewHolder>(
                 Blog.class,
-                R.layout.activity_clothes,
+                R.layout.post_row,
                 ClothesActivity.BlogViewHolder.class,
                 databaseReference
         ) {
@@ -235,11 +235,17 @@ public class ClothesActivity extends AppCompatActivity
         else if (id == R.id.logout) {
 
             //End user session
-            FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(ClothesActivity.this, FirstpageActivity.class);
-            homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(ClothesActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
-            startActivity(homeagain);
+            if(mAuth.getCurrentUser() != null){
+                //End users session
+                FirebaseAuth.getInstance().signOut();
+                Intent homeagain = new Intent(ClothesActivity.this, FirstpageActivity.class);
+                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(ClothesActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                startActivity(homeagain);
+            }
+            else
+                Toast.makeText(ClothesActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
+
 
         }else if (id == R.id.sett) {
 

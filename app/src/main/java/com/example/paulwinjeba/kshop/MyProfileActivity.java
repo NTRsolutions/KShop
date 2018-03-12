@@ -32,7 +32,7 @@ public class MyProfileActivity extends AppCompatActivity
     private RecyclerView myProfile;
 
     FirebaseAuth mAuth;
-    String myUuid=" ";
+    String myUuid = null;
     private DatabaseReference databaseReference;
 
     Button login,signin;
@@ -43,10 +43,10 @@ public class MyProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_profile);
 
         mAuth = FirebaseAuth.getInstance();
-        myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        myUuid = mAuth.getCurrentUser().getUid().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid);
 
-        myProfile = (RecyclerView) findViewById(R.id.my_profiles);
+        myProfile = (RecyclerView) findViewById(R.id.profile);
         myProfile.setHasFixedSize(true);
         myProfile.setLayoutManager(new LinearLayoutManager(this));
 
@@ -66,14 +66,14 @@ public class MyProfileActivity extends AppCompatActivity
     @Override
     protected void onStart(){
         super.onStart();
-        FirebaseRecyclerAdapter<MyProfile, MyProfileActivity.MyProfileViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyProfile, MyProfileActivity.MyProfileViewHolder>(
-                MyProfile.class,
-                R.layout.my_profiles,
-                MyProfileViewHolder.class,
+        FirebaseRecyclerAdapter<Myprofile, MyprofileViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Myprofile, MyprofileViewHolder>(
+                Myprofile.class,
+                R.layout.myprofile,
+                MyprofileViewHolder.class,
                 databaseReference
         ) {
             @Override
-            protected void populateViewHolder(MyProfileActivity.MyProfileViewHolder viewHolder, MyProfile model, int position) {
+            protected void populateViewHolder(MyprofileViewHolder viewHolder, Myprofile model, int position) {
 
                 viewHolder.setName(model.getName());
                 viewHolder.setEmail_ID(model.getEmail_ID());
@@ -83,14 +83,13 @@ public class MyProfileActivity extends AppCompatActivity
         };
 
         myProfile.setAdapter(firebaseRecyclerAdapter);
-
     }
 
-    public static class MyProfileViewHolder extends RecyclerView.ViewHolder{
+    public static class MyprofileViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
 
-        public MyProfileViewHolder(View itemView) {
+        public MyprofileViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
@@ -176,7 +175,7 @@ public class MyProfileActivity extends AppCompatActivity
             startActivity(upload);
 
         } else if (id == R.id.myprofile) {
-            final Intent upload = new Intent(MyProfileActivity.this,PostActivity.class);
+            final Intent upload = new Intent(this,MyProfileActivity.class);
             startActivity(upload);
 
         } else if (id == R.id.upload) {
@@ -235,18 +234,24 @@ public class MyProfileActivity extends AppCompatActivity
                 {
                     Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
+                finally {
 
+                }
             }
         }
         else if (id == R.id.logout) {
 
             //End user session
-            FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(MyProfileActivity.this, FirstpageActivity.class);
-            homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(MyProfileActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
-            startActivity(homeagain);
-
+            if(mAuth.getCurrentUser() != null){
+                //End users session
+                FirebaseAuth.getInstance().signOut();
+                Intent homeagain = new Intent(MyProfileActivity.this, FirstpageActivity.class);
+                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(MyProfileActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                startActivity(homeagain);
+            }
+            else
+                Toast.makeText(MyProfileActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
         }else if (id == R.id.sett) {
 
         }

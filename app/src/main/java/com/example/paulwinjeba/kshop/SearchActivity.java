@@ -39,7 +39,7 @@ public class SearchActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private RecyclerView ResultList;
-    
+
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
@@ -83,7 +83,7 @@ public class SearchActivity extends AppCompatActivity
 
     private void firebaseProductSearch(String search) {
 
-        Query firebaseSearchQuery = databaseReference.orderByChild("Tiitle").startAt(search).endAt(search+ "\uf8ff");
+        Query firebaseSearchQuery = databaseReference.orderByChild("Title").startAt(search).endAt(search+ "\uf8ff");
         FirebaseRecyclerAdapter<List, ListViewHolder> firebaseSearchAdapter = new FirebaseRecyclerAdapter<List, ListViewHolder>(
                 List.class,
                 R.layout.list_layout,
@@ -103,7 +103,7 @@ public class SearchActivity extends AppCompatActivity
 
 
     // CLass View Holder for search : List
-    public class ListViewHolder extends RecyclerView.ViewHolder{
+    public static class ListViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
 
@@ -197,7 +197,7 @@ public class SearchActivity extends AppCompatActivity
             startActivity(upload);
 
         } else if (id == R.id.upload) {
-            if (mAuth.getCurrentUser() != null) {
+            if (mAuth.getCurrentUser().getUid() != null) {
                 // User is logged in
                 final Intent upload = new Intent(SearchActivity.this,PostActivity.class);
                 startActivity(upload);
@@ -258,11 +258,17 @@ public class SearchActivity extends AppCompatActivity
         else if (id == R.id.logout) {
 
             //End user session
-            FirebaseAuth.getInstance().signOut();
-            Intent homeagain = new Intent(SearchActivity.this, FirstpageActivity.class);
-            homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            Toast.makeText(SearchActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
-            startActivity(homeagain);
+            if(mAuth.getCurrentUser().getUid() != null){
+                //End users session
+                FirebaseAuth.getInstance().signOut();
+                Intent homeagain = new Intent(SearchActivity.this, FirstpageActivity.class);
+                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(SearchActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                startActivity(homeagain);
+            }
+            else
+                Toast.makeText(SearchActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
+
 
         }else if (id == R.id.sett) {
 
