@@ -58,7 +58,9 @@
         <activity android:name=".MyPostActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".BlogSingleActivity"></activity>
+        <activity android:name=".BlogSingleActivity" />
+        <activity android:name=".DonationActivity" />
+        <activity android:name=".DonateActivity"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,13 +39,11 @@ import com.squareup.picasso.Picasso;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private RecyclerView PostList,ResultList;
+    private RecyclerView PostList;
 
     boolean isOnline;
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-
-    EditText search_text;
     Button login,signin;
 
     @Override
@@ -58,8 +57,13 @@ public class HomeActivity extends AppCompatActivity
         //String display = String.valueOf(mAuth.getCurrentUser());
 
         PostList = (RecyclerView) findViewById(R.id.post_list);
+
+        LinearLayoutManager linearlayout = new LinearLayoutManager(this);
+        linearlayout.setReverseLayout(true);
+        linearlayout.setStackFromEnd(true);
+
         PostList.setHasFixedSize(true);
-        PostList.setLayoutManager(new LinearLayoutManager(this));
+        PostList.setLayoutManager(linearlayout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,7 +115,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onStart(){
         super.onStart();
-        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+        final FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
                 Blog.class,
                 R.layout.post_row,
                 BlogViewHolder.class,
@@ -120,8 +124,8 @@ public class HomeActivity extends AppCompatActivity
             @Override
             protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
 
-                final String post_key = getRef(position).toString();
-
+                final String post_key = getRef(position).getKey().toString();
+//                final String post_key_uid = databaseReference.child(post_key).child("UID").getKey().toString();
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setPrice(model.getPrice());
                 viewHolder.setImage(getApplicationContext(),model.getImage());
@@ -129,9 +133,7 @@ public class HomeActivity extends AppCompatActivity
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(HomeActivity.this,"Loading...",Toast.LENGTH_LONG).show();
-
-                        Intent singleBlogIntent = new Intent(HomeActivity.this,BlogSingleActivity.class);
+                       Intent singleBlogIntent = new Intent(HomeActivity.this,BlogSingleActivity.class);
                         singleBlogIntent.putExtra("blog_id",post_key);
                         startActivity(singleBlogIntent);
                     }
@@ -239,8 +241,10 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.myprofile) {
             if (mAuth.getCurrentUser() != null) {
-                final Intent upload = new Intent(HomeActivity.this, MyProfileActivity.class);
-                startActivity(upload);
+                final Intent profile = new Intent(HomeActivity.this, MyProfileActivity.class);
+                String UUid = mAuth.getCurrentUser().getUid().toString();
+                profile.putExtra("uuid",UUid);
+                startActivity(profile);
             }
             else{
                 try {
@@ -296,9 +300,63 @@ public class HomeActivity extends AppCompatActivity
                 }
             }
         } else if(id == R.id.mypost){
-            final Intent upload = new Intent(HomeActivity.this,MyPostActivity.class);
-            startActivity(upload);
+            if (mAuth.getCurrentUser() != null) {
+                final Intent upload = new Intent(HomeActivity.this, MyPostActivity.class);
+                startActivity(upload);
+            }
+            else {
+                try {
+                    LayoutInflater inflater = getLayoutInflater();
+                    View alertLayout;
+                    alertLayout = inflater.inflate(R.layout.activity_inflater, null);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+                    //Set the button id
+                    login = (Button) alertLayout.findViewById(R.id.log_in);
+                    signin = (Button) alertLayout.findViewById(R.id.sign_in);
+                    alert.setTitle("Login or Signin");
+                    // this is set the view from XML inside AlertDialog
+                    alert.setView(alertLayout);
+                    // disallow cancel of AlertDialog on click of back button and outside touch
+                    alert.setCancelable(false);
 
+                    login.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent nxtlogin = new Intent(HomeActivity.this, PostLoginActivity.class);
+                            Log.d("login", "testing");
+                            startActivity(nxtlogin);
+                        }
+                    });
+
+                    signin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d("sign in checking", "tested");
+                            final Intent nxtsignin = new Intent(HomeActivity.this, PostSigninActivity.class);
+                            startActivity(nxtsignin);
+                        }
+                    });
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                            /*final Intent cancel = new Intent(HomeActivity.this, HomeActivity.class);
+                            startActivity(cancel);*/
+
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+                finally {
+
+                }
+            }
         } else if (id == R.id.upload) {
             if (mAuth.getCurrentUser() != null) {
                 // User is logged in

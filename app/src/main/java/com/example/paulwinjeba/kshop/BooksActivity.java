@@ -76,14 +76,23 @@ public class BooksActivity extends AppCompatActivity
             @Override
             protected void populateViewHolder(BooksActivity.BlogViewHolder viewHolder, Blog model, int position) {
 
+                final String post_key = getRef(position).getKey().toString();
+
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setPrice(model.getPrice());
                 viewHolder.setImage(getApplicationContext(),model.getImage());
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent singleBlogIntent = new Intent(BooksActivity.this,BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id",post_key);
+                        startActivity(singleBlogIntent);
+                    }
+                });
             }
         };
-
         post.setAdapter(firebaseRecyclerAdapter);
-
     }
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder{

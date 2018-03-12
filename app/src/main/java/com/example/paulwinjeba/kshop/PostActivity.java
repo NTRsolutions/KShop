@@ -517,6 +517,8 @@ public class PostActivity extends AppCompatActivity {
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();
 
+                                key = databaseReference.child("Post").push().getKey().toString();
+
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
                                 newPost.child("Category").setValue(category);
@@ -524,9 +526,6 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child("Description_2").setValue(description_2);
                                 newPost.child("Price").setValue(price);
                                 newPost.child("UID").setValue(uuid);
-
-                                key = databaseReference.child("Post").push().getKey();
-
                                 //mProgress.dismiss();
 
                                 //Upload in Miscellaneous
@@ -538,6 +537,7 @@ public class PostActivity extends AppCompatActivity {
                                 newPostE.child("Description_1").setValue(description_1);
                                 newPostE.child("Description_2").setValue(description_2);
                                 newPostE.child("Price").setValue(price);
+                                newPostE.child("UID").setValue(uuid);
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
@@ -574,8 +574,6 @@ public class PostActivity extends AppCompatActivity {
             /*Intent homeintent = new Intent(PostActivity.this, HomeActivity.class);
             homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeintent);*/
-            Toast.makeText(PostActivity.this, "Processing...", Toast.LENGTH_LONG).show();
-            finish();
         }//NOT TO GO BACK
     }
     @Override

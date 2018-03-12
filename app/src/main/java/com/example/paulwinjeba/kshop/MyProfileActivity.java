@@ -23,13 +23,14 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MyProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private RecyclerView myProfile;
 
     FirebaseAuth mAuth;
     String myUuid = null;
@@ -43,12 +44,34 @@ public class MyProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_profile);
 
         mAuth = FirebaseAuth.getInstance();
-        myUuid = mAuth.getCurrentUser().getUid().toString();
+        myUuid = getIntent().getExtras().getString("uuid");
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid);
 
-        myProfile = (RecyclerView) findViewById(R.id.profile);
-        myProfile.setHasFixedSize(true);
-        myProfile.setLayoutManager(new LinearLayoutManager(this));
+        final TextView text_name = (TextView) findViewById(R.id.text_name);
+        final TextView text_email = (TextView) findViewById(R.id.text_email);
+        final TextView text_phone = (TextView) findViewById(R.id.text_phone);
+        final TextView text_addr = (TextView) findViewById(R.id.text_addr);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name = (String) dataSnapshot.child("Name").getValue();
+                String emailid = (String) dataSnapshot.child("Email_ID").getValue();
+                String phone = (String) dataSnapshot.child("Phone_Number").getValue();
+                String addr = (String) dataSnapshot.child("Address").getValue();
+
+                text_name.setText(name);
+                text_email.setText(emailid);
+                text_phone.setText(phone);
+                text_addr.setText(addr);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,57 +86,6 @@ public class MyProfileActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        FirebaseRecyclerAdapter<Myprofile, MyprofileViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Myprofile, MyprofileViewHolder>(
-                Myprofile.class,
-                R.layout.myprofile,
-                MyprofileViewHolder.class,
-                databaseReference
-        ) {
-            @Override
-            protected void populateViewHolder(MyprofileViewHolder viewHolder, Myprofile model, int position) {
-
-                viewHolder.setName(model.getName());
-                viewHolder.setEmail_ID(model.getEmail_ID());
-                viewHolder.setPhone_Number(model.getPhone_Number());
-                viewHolder.setAddress(model.getAddress());
-            }
-        };
-
-        myProfile.setAdapter(firebaseRecyclerAdapter);
-    }
-
-    public static class MyprofileViewHolder extends RecyclerView.ViewHolder{
-
-        View mView;
-
-        public MyprofileViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
-
-        public void setName(String Name){
-            TextView text_name = (TextView) mView.findViewById(R.id.text_name);
-            text_name.setText(Name);
-        }
-
-        public void setEmail_ID(String Email_ID){
-            TextView text_email = (TextView) mView.findViewById(R.id.text_email);
-            text_email.setText(Email_ID);
-        }
-
-        public void setPhone_Number(String Phone_Number){
-            TextView text_phone = (TextView) mView.findViewById(R.id.text_phone);
-            text_phone.setText(Phone_Number);
-        }
-
-        public void setAddress(String Address){
-            TextView text_addr = (TextView) mView.findViewById(R.id.text_addr);
-            text_addr.setText(Address);
-        }
-    }
 
     @Override
     public void onBackPressed() {
