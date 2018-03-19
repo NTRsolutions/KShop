@@ -388,7 +388,9 @@
                 android:textAlignment="center"
                 android:paddingTop="20dp"
                 android:layout_margin="5dp"
-                android:textSize="16dp"/>
+                android:textSize="16dp"
+                android:drawableEnd="@drawable/upload"
+                android:theme="@style/MyButton"/>
 
         </LinearLayout>
     </ScrollView>

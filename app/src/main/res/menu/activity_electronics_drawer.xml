@@ -32,6 +32,15 @@
     <item android:title="My Account">
         <menu>
             <item
+                android:id="@+id/upload"
+                android:icon="@drawable/upload"
+                android:title="Upload Item" />
+            <item
+                android:id="@+id/gift"
+                android:icon="@drawable/gift"
+                android:title="Donate" />
+
+            <item
                 android:id="@+id/myprofile"
                 android:icon="@drawable/my_profile"
                 android:title="My Profile">
@@ -43,13 +52,13 @@
                 android:icon="@drawable/add_img">
             </item>
             <item
-                android:id="@+id/upload"
-                android:icon="@drawable/upload"
-                android:title="Upload Item" />
-            <item
                 android:id="@+id/logout"
                 android:icon="@drawable/logout"
                 android:title="Logout" />
+            <item
+                android:title="About"
+                android:icon="@drawable/about"
+                android:id="@+id/about"/>
             <item
                 android:id="@+id/sett"
                 android:icon="@drawable/settings"

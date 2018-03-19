@@ -60,7 +60,9 @@
         <activity android:name=".SearchActivity" />
         <activity android:name=".BlogSingleActivity" />
         <activity android:name=".DonationActivity" />
-        <activity android:name=".DonateActivity"></activity>
+        <activity android:name=".DonateActivity" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".TermsAndConditionsActivity"></activity>
     </application>
 
 </manifest>

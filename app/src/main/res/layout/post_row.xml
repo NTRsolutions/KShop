@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/input_outline"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/post_image"
@@ -27,19 +27,20 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Post Title"
-            android:textSize="22dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="5dp">
+            android:padding="3dp">
 
             <TextView
                 android:id="@+id/price_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Price:"
-                android:textSize="22dp"
+                android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"/>
             <TextView
 
@@ -48,8 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:orientation="horizontal"
-                android:padding="5dp"
-                android:textSize="22dp"/>
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 

@@ -35,9 +35,9 @@ public class MyPostActivity extends AppCompatActivity
 
     private RecyclerView MyPostList;
 
-    String post_key= null;
+    String post_key= null,myUuid;
     FirebaseAuth mAuth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,database;
 
     Button login,signin,edit,delete;
     @Override
@@ -46,7 +46,7 @@ public class MyPostActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_post);
 
         mAuth = FirebaseAuth.getInstance();
-        String myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+        myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid).child("My Post");
         //String post_key = getIntent().getExtras().getString("blog_id");
 
@@ -100,6 +100,34 @@ public class MyPostActivity extends AppCompatActivity
                 viewHolder.setCategory(model.getCategory());
                 viewHolder.setDescription_1(model.getDescription_1());
                 viewHolder.setDescription_2(model.getDescription_2());
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyPostActivity.this);
+                        alertDialogBuilder.setMessage("Are you sure you want to delete this post ? ");
+                                alertDialogBuilder.setPositiveButton("Yes",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface arg0, int arg1) {
+                                                Toast.makeText(MyPostActivity.this,"Deleting",Toast.LENGTH_LONG).show();
+                                                databaseReference.removeValue();
+                                                database = FirebaseDatabase.getInstance().getReference().child("Post").child(post_key);
+                                            }
+                                        });
+
+                        alertDialogBuilder.setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(MyPostActivity.this,"Cancelled",Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+                });
             }
         };
 

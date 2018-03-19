@@ -42,4 +42,15 @@
         <item>XL</item>
         <item>XXL</item>
     </string-array>
+
+    <string name="line1">Here are a quick easy steps to follow to know the application</string>
+    <string name="line2">Sign in to your account using your Karunya mail Id</string>
+    <string name="line3">Search for Products that you might want to buy</string>
+    <string name="line4">Or</string>
+    <string name="line5">Post the products that you want to sell</string>
+    <string name="line6">You can even donate products for free- Just go to the Donate option</string>
+    <string name="line7">If you like a Product then through text or call make known to the poster who postered the post.</string>
+    <string name="line8">You can either delete your Product later or click sold to remove it from the database.</string>
+
 </resources>
+

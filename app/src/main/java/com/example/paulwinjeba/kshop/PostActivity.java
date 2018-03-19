@@ -35,8 +35,6 @@ import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
 
-    boolean doubleBackToExitPressedOnce = false;
-
     TextView mstlabel;
     TextInputLayout companyname,specific,specific_cloth,modelname,gear_deatils,noofgear,brakes_details,details_rims,bookname,authorname,bookdesc,desc,desc_bike;
     EditText company_name,device_specification,specific_clothes,model_name,gear,noof_gear,brakes,rims,book_name,author_name,book_desc,description,description_bike;
@@ -289,15 +287,12 @@ public class PostActivity extends AppCompatActivity {
         });
 
         post_btn = (Button) findViewById(R.id.post_btn);
-
         post_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startPosting();
             }
         });
-
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -335,15 +330,15 @@ public class PostActivity extends AppCompatActivity {
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();
 
-                                newPost.child("Title").setValue(title);
-                                newPost.child("Image").setValue(downloadUrl.toString());
-                                newPost.child("Category").setValue(category);
-                                newPost.child("Description_1").setValue(description_1);
-                                newPost.child("Description_2").setValue(description_2);
-                                newPost.child("Price").setValue(price);
-                                newPost.child("UID").setValue(uuid);
+                                key = newPost.getKey();
 
-                                String key = databaseReference.child("Post").push().getKey();
+                                newPost.child(key).child("Title").setValue(title);
+                                newPost.child(key).child("Image").setValue(downloadUrl.toString());
+                                newPost.child(key).child("Category").setValue(category);
+                                newPost.child(key).child("Description_1").setValue(description_1);
+                                newPost.child(key).child("Description_2").setValue(description_2);
+                                newPost.child(key).child("Price").setValue(price);
+                                newPost.child(key).child("UID").setValue(uuid);
 
                                 //mProgress.dismiss();
                                 //Upload in Electronics
@@ -378,16 +373,15 @@ public class PostActivity extends AppCompatActivity {
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();
 
-                                newPost.child("Title").setValue(title);
-                                newPost.child("Image").setValue(downloadUrl.toString());
-                                newPost.child("Category").setValue(category);
-                                newPost.child("Description_1").setValue(description_1);
-                                newPost.child("Description_2").setValue(description_2);
-                                newPost.child("Price").setValue(price);
-                                newPost.child("UID").setValue(uuid);
+                                key = newPost.getKey();
 
-                                key = databaseReference.child("Post").push().getKey();
-
+                                newPost.child(key).child("Title").setValue(title);
+                                newPost.child(key).child("Image").setValue(downloadUrl.toString());
+                                newPost.child(key).child("Category").setValue(category);
+                                newPost.child(key).child("Description_1").setValue(description_1);
+                                newPost.child(key).child("Description_2").setValue(description_2);
+                                newPost.child(key).child("Price").setValue(price);
+                                newPost.child(key).child("UID").setValue(uuid);
                                 //mProgress.dismiss();
                                     //Upload in Electronics
                                 DatabaseReference newPostE = databaseReference.child("Clothes").child(key);
@@ -427,16 +421,15 @@ public class PostActivity extends AppCompatActivity {
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();
 
-                                newPost.child("Title").setValue(title);
-                                newPost.child("Image").setValue(downloadUrl.toString());
-                                newPost.child("Category").setValue(category);
-                                newPost.child("Description_1").setValue(description_1);
-                                newPost.child("Description_2").setValue(description_2);
-                                newPost.child("Price").setValue(price);
-                                newPost.child("UID").setValue(uuid);
+                                key = newPost.getKey();
 
-                                key = databaseReference.child("Post").push().getKey();
-
+                                newPost.child(key).child("Title").setValue(title);
+                                newPost.child(key).child("Image").setValue(downloadUrl.toString());
+                                newPost.child(key).child("Category").setValue(category);
+                                newPost.child(key).child("Description_1").setValue(description_1);
+                                newPost.child(key).child("Description_2").setValue(description_2);
+                                newPost.child(key).child("Price").setValue(price);
+                                newPost.child(key).child("UID").setValue(uuid);
                                 //mProgress.dismiss();
                                 //Upload in Bikes
                                 DatabaseReference newPostE = databaseReference.child("Bikes").child(key);
@@ -473,15 +466,15 @@ public class PostActivity extends AppCompatActivity {
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();
 
+                                key = newPost.getKey();
+
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
                                 newPost.child("Category").setValue(category);
                                 newPost.child("Description_1").setValue(description_1);
                                 newPost.child("Description_2").setValue(description_2);
-                                newPost.child("Price").setValue(price);
-                                newPost.child("UID").setValue(uuid);
-
-                                key = databaseReference.child("Post").push().getKey();
+                                newPost.child(key).child("Price").setValue(price);
+                                newPost.child(key).child("UID").setValue(uuid);
 
                                 //mProgress.dismiss();
 
@@ -517,15 +510,15 @@ public class PostActivity extends AppCompatActivity {
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();
 
-                                key = databaseReference.child("Post").push().getKey().toString();
+                                key = newPost.getKey();
 
-                                newPost.child("Title").setValue(title);
-                                newPost.child("Image").setValue(downloadUrl.toString());
-                                newPost.child("Category").setValue(category);
-                                newPost.child("Description_1").setValue(description_1);
-                                newPost.child("Description_2").setValue(description_2);
-                                newPost.child("Price").setValue(price);
-                                newPost.child("UID").setValue(uuid);
+                                newPost.child(key).child("Title").setValue(title);
+                                newPost.child(key).child("Image").setValue(downloadUrl.toString());
+                                newPost.child(key).child("Category").setValue(category);
+                                newPost.child(key).child("Description_1").setValue(description_1);
+                                newPost.child(key).child("Description_2").setValue(description_2);
+                                newPost.child(key).child("Price").setValue(price);
+                                newPost.child(key).child("UID").setValue(uuid);
                                 //mProgress.dismiss();
 
                                 //Upload in Miscellaneous

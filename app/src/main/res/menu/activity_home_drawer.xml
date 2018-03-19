@@ -61,6 +61,10 @@
                 android:icon="@drawable/logout"
                 android:title="Logout" />
             <item
+                android:title="About"
+                android:icon="@drawable/about"
+                android:id="@+id/about"/>
+            <item
                 android:id="@+id/sett"
                 android:icon="@drawable/settings"
                 android:title="Settings" />
