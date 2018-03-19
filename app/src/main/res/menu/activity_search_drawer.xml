@@ -27,6 +27,10 @@
             android:id="@+id/miscellaneous"
             android:icon="@drawable/misc"
             android:title="Miscellaneous"/>
+        <item
+            android:id="@+id/donation"
+            android:icon="@drawable/gift"
+            android:title="Donatation" />
     </group>
 
     <item android:title="My Account">
