@@ -28,6 +28,7 @@ public class AboutActivity extends AppCompatActivity
 
     FirebaseAuth mAuth;
     Button login,signin;
+    private int key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,68 +113,17 @@ public class AboutActivity extends AppCompatActivity
             startActivity(upload);
 
         } else if (id == R.id.miscellaneous) {
-            final Intent electronic = new Intent(AboutActivity.this, MiscellaneousActivity.class);
-            startActivity(electronic);
+            final Intent misc = new Intent(AboutActivity.this, MiscellaneousActivity.class);
+            startActivity(misc);
 
-        } else if (id == R.id.myprofile) {
+        } else if (id == R.id.donation){
+            final Intent donation = new Intent(AboutActivity.this, MiscellaneousActivity.class);
+            startActivity(donation);
+        }
+        else if (id == R.id.gift){
             if (mAuth.getCurrentUser() != null) {
-                final Intent profile = new Intent(AboutActivity.this, MyProfileActivity.class);
-                String UUid = mAuth.getCurrentUser().getUid().toString();
-                profile.putExtra("uuid", UUid);
-                startActivity(profile);
-            } else {
-                try {
-                    LayoutInflater inflater = getLayoutInflater();
-                    View alertLayout;
-                    alertLayout = inflater.inflate(R.layout.activity_inflater, null);
-                    AlertDialog.Builder alert = new AlertDialog.Builder(AboutActivity.this);
-                    //Set the button id
-                    login = (Button) alertLayout.findViewById(R.id.log_in);
-                    signin = (Button) alertLayout.findViewById(R.id.sign_in);
-                    alert.setTitle("Login or Signin");
-                    // this is set the view from XML inside AlertDialog
-                    alert.setView(alertLayout);
-                    // disallow cancel of AlertDialog on click of back button and outside touch
-                    alert.setCancelable(false);
-
-                    login.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent nxtlogin = new Intent(AboutActivity.this, PostLoginActivity.class);
-                            Log.d("login", "testing");
-                            startActivity(nxtlogin);
-                        }
-                    });
-
-                    signin.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d("sign in checking", "tested");
-                            final Intent nxtsignin = new Intent(AboutActivity.this, PostSigninActivity.class);
-                            startActivity(nxtsignin);
-                        }
-                    });
-                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
-                            /*final Intent cancel = new Intent(HomeActivity.this, HomeActivity.class);
-                            startActivity(cancel);*/
-
-                        }
-                    });
-                    AlertDialog dialog = alert.create();
-                    dialog.show();
-                } catch (Exception e) {
-                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                } finally {
-
-                }
-            }
-        } else if (id == R.id.mypost) {
-            if (mAuth.getCurrentUser() != null) {
-                final Intent upload = new Intent(AboutActivity.this, MyPostActivity.class);
+                // User is logged in
+                final Intent upload = new Intent(AboutActivity.this, DonateActivity.class);
                 startActivity(upload);
             } else {
                 try {
@@ -194,7 +144,8 @@ public class AboutActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             Intent nxtlogin = new Intent(AboutActivity.this, PostLoginActivity.class);
-                            Log.d("login", "testing");
+                            key=1;
+                            nxtlogin.putExtra("type_key",key);
                             startActivity(nxtlogin);
                         }
                     });
@@ -202,8 +153,10 @@ public class AboutActivity extends AppCompatActivity
                     signin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.d("sign in checking", "tested");
+                            //Log.d("sign in checking", "tested");
                             final Intent nxtsignin = new Intent(AboutActivity.this, PostSigninActivity.class);
+                            key=1;
+                            nxtsignin.putExtra("type_key",key);
                             startActivity(nxtsignin);
                         }
                     });
@@ -221,9 +174,24 @@ public class AboutActivity extends AppCompatActivity
                     dialog.show();
                 } catch (Exception e) {
                     Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                } finally {
-
                 }
+            }
+        }
+        else if (id == R.id.myprofile) {
+            if (mAuth.getCurrentUser() != null) {
+                final Intent profile = new Intent(AboutActivity.this, MyProfileActivity.class);
+                String UUid = mAuth.getCurrentUser().getUid().toString();
+                profile.putExtra("uuid", UUid);
+                startActivity(profile);
+            } else {
+                Toast.makeText(AboutActivity.this,"Log in to check your profile !",Toast.LENGTH_LONG).show();
+            }
+        } else if (id == R.id.mypost) {
+            if (mAuth.getCurrentUser() != null) {
+                final Intent upload = new Intent(AboutActivity.this, MyPostActivity.class);
+                startActivity(upload);
+            } else {
+                Toast.makeText(AboutActivity.this,"Log in to check your Posts !",Toast.LENGTH_LONG).show();
             }
         } else if (id == R.id.upload) {
             if (mAuth.getCurrentUser() != null) {
@@ -249,7 +217,8 @@ public class AboutActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             Intent nxtlogin = new Intent(AboutActivity.this, PostLoginActivity.class);
-                            Log.d("login", "testing");
+                            key=0;
+                            nxtlogin.putExtra("type_key",key);
                             startActivity(nxtlogin);
                         }
                     });
@@ -257,8 +226,9 @@ public class AboutActivity extends AppCompatActivity
                     signin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.d("sign in checking", "tested");
                             final Intent nxtsignin = new Intent(AboutActivity.this, PostSigninActivity.class);
+                            key=0;
+
                             startActivity(nxtsignin);
                         }
                     });

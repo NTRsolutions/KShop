@@ -179,8 +179,12 @@ public class BooksActivity extends AppCompatActivity
             startActivity(upload);
 
         } else if(id == R.id.mypost){
-            final Intent upload = new Intent(BooksActivity.this,MyPostActivity.class);
-            startActivity(upload);
+            if(mAuth.getCurrentUser() != null){
+                final Intent upload = new Intent(BooksActivity.this,MyPostActivity.class);
+                startActivity(upload);
+            }
+            else
+                Toast.makeText(BooksActivity.this,"Log in to Check your posts !",Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.upload) {
             if (mAuth.getCurrentUser() != null) {
@@ -240,9 +244,12 @@ public class BooksActivity extends AppCompatActivity
                 }
 
             }
+        }else if (id == R.id.about){
+            final Intent about = new Intent(BooksActivity.this, AboutActivity.class);
+            startActivity(about);
         }
-        else if (id == R.id.logout) {
 
+        else if (id == R.id.logout) {
             //End user session
             if(mAuth.getCurrentUser() != null){
                 //End users session
