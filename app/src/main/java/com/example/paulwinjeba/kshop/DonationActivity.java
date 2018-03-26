@@ -326,8 +326,20 @@ public class DonationActivity extends AppCompatActivity
             }
             else
                 Toast.makeText(DonationActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
-        } else if (id == R.id.sett) {
+        } else if (id == R.id.requirement){
+            Intent requ = new Intent(DonationActivity.this, ViewRequestsActivity.class);
+            startActivity(requ);
 
+        } else if (id == R.id.request){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(DonationActivity.this, RequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(DonationActivity.this, "Log in to request a requirement... !", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.termsncond){
+            Intent tnc = new Intent(DonationActivity.this, TermsAndConditionsActivity.class);
+            startActivity(tnc);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

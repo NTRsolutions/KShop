@@ -32,6 +32,10 @@
             android:id="@+id/donation"
             android:icon="@drawable/gift"
             android:title="Donations" />
+        <item
+            android:id="@+id/requirement"
+            android:icon="@drawable/requirement"
+            android:title="Requirements"/>
     </group>
 
     <item android:title="My Account">
@@ -44,6 +48,10 @@
                 android:id="@+id/gift"
                 android:icon="@drawable/gift"
                 android:title="Donate" />
+            <item
+                android:id="@+id/request"
+                android:icon="@drawable/request"
+                android:title="Request a requirement"/>
 
             <item
                 android:id="@+id/myprofile"
@@ -65,9 +73,10 @@
                 android:icon="@drawable/about"
                 android:id="@+id/about"/>
             <item
-                android:id="@+id/sett"
-                android:icon="@drawable/settings"
-                android:title="Settings" />
+                android:id="@+id/termsncond"
+                android:icon="@drawable/termncond"
+                android:title="Terms &amp; Conditions"
+                tools:ignore="HardcodedText" />
         </menu>
     </item>
 

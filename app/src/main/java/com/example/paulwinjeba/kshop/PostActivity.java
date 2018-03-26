@@ -330,7 +330,7 @@ public class PostActivity extends AppCompatActivity {
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();
 
-                                key = newPost.getKey();
+                                //key = newPost.getKey();
 
                                 newPost.child(key).child("Title").setValue(title);
                                 newPost.child(key).child("Image").setValue(downloadUrl.toString());
@@ -341,17 +341,7 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child(key).child("UID").setValue(uuid);
 
                                 //mProgress.dismiss();
-                                //Upload in Electronics
-                                DatabaseReference newPostE = databaseReference.child("Electronics").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-
-                                //Upload under user
+                                /*//Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
                                 DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
                                 myPost.child("Title").setValue(title);
@@ -359,7 +349,7 @@ public class PostActivity extends AppCompatActivity {
                                 myPost.child("Category").setValue(category);
                                 myPost.child("Description_1").setValue(description_1);
                                 myPost.child("Description_2").setValue(description_2);
-                                myPost.child("Price").setValue(price);
+                                myPost.child("Price").setValue(price);*/
 
                                 Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
                                 startActivity(home_again);
@@ -383,25 +373,6 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child(key).child("Price").setValue(price);
                                 newPost.child(key).child("UID").setValue(uuid);
                                 //mProgress.dismiss();
-                                    //Upload in Electronics
-                                DatabaseReference newPostE = databaseReference.child("Clothes").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-
-                                //Upload under user
-                                String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
-                                myPost.child("Title").setValue(title);
-                                myPost.child("Image").setValue(downloadUrl.toString());
-                                myPost.child("Category").setValue(category);
-                                myPost.child("Description_1").setValue(description_1);
-                                myPost.child("Description_2").setValue(description_2);
-                                myPost.child("Price").setValue(price);
 
                                 Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
                                 startActivity(home_again);
@@ -431,25 +402,6 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child(key).child("Price").setValue(price);
                                 newPost.child(key).child("UID").setValue(uuid);
                                 //mProgress.dismiss();
-                                //Upload in Bikes
-                                DatabaseReference newPostE = databaseReference.child("Bikes").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-
-                                //Upload under user
-                                String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
-                                myPost.child("Title").setValue(title);
-                                myPost.child("Image").setValue(downloadUrl.toString());
-                                myPost.child("Category").setValue(category);
-                                myPost.child("Description_1").setValue(description_1);
-                                myPost.child("Description_2").setValue(description_2);
-                                myPost.child("Price").setValue(price);
 
                                 Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
                                 startActivity(home_again);
@@ -477,27 +429,6 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child(key).child("UID").setValue(uuid);
 
                                 //mProgress.dismiss();
-
-                                //Upload in Books
-                                DatabaseReference newPostE = databaseReference.child("Books").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-
-                                //Upload under user
-                                String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
-                                myPost.child("Title").setValue(title);
-                                myPost.child("Image").setValue(downloadUrl.toString());
-                                myPost.child("Category").setValue(category);
-                                myPost.child("Description_1").setValue(description_1);
-                                myPost.child("Description_2").setValue(description_2);
-                                myPost.child("Price").setValue(price);
-
                                 Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
                                 startActivity(home_again);
                                 Toast.makeText(PostActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
@@ -520,27 +451,6 @@ public class PostActivity extends AppCompatActivity {
                                 newPost.child(key).child("Price").setValue(price);
                                 newPost.child(key).child("UID").setValue(uuid);
                                 //mProgress.dismiss();
-
-                                //Upload in Miscellaneous
-                                DatabaseReference newPostE = databaseReference.child("Miscellaneous").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-                                newPostE.child("UID").setValue(uuid);
-
-                                //Upload under user
-                                String user_id = mAuth.getCurrentUser().getUid();
-                                DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
-                                myPost.child("Title").setValue(title);
-                                myPost.child("Image").setValue(downloadUrl.toString());
-                                myPost.child("Category").setValue(category);
-                                myPost.child("Description_1").setValue(description_1);
-                                myPost.child("Description_2").setValue(description_2);
-                                myPost.child("Price").setValue(price);
 
                                 Intent home_again = new Intent(PostActivity.this, HomeActivity.class);
                                 startActivity(home_again);

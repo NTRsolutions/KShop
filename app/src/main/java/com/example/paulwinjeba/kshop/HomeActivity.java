@@ -239,7 +239,10 @@ public class HomeActivity extends AppCompatActivity
             final Intent electronic = new Intent(HomeActivity.this,MiscellaneousActivity.class);
             startActivity(electronic);
 
-        } else if (id == R.id.myprofile) {
+        } else if (id == R.id.donation){
+            final Intent electronic = new Intent(HomeActivity.this, DonationActivity.class);
+            startActivity(electronic);
+        }else if (id == R.id.myprofile) {
             if (mAuth.getCurrentUser() != null) {
                 final Intent profile = new Intent(HomeActivity.this, MyProfileActivity.class);
                 String UUid = mAuth.getCurrentUser().getUid().toString();
@@ -432,9 +435,20 @@ public class HomeActivity extends AppCompatActivity
         }else if (id == R.id.about){
             Intent about = new Intent(HomeActivity.this, AboutActivity.class);
             startActivity(about);
-        }
-        else if (id == R.id.sett) {
+        }else if (id == R.id.requirement){
+            Intent requ = new Intent(HomeActivity.this, ViewRequestsActivity.class);
+            startActivity(requ);
 
+        } else if (id == R.id.request){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(HomeActivity.this, RequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(HomeActivity.this, "Log in to request a requirement... !", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.termsncond){
+            Intent tnc = new Intent(HomeActivity.this, TermsAndConditionsActivity.class);
+            startActivity(tnc);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

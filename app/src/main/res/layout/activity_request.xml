@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.paulwinjeba.kshop.RequestActivity">
+
+    <ScrollView android:layout_height="wrap_content"
+        android:layout_width="fill_parent" android:id="@+id/scrollView1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingTop="20dp"
+            android:paddingRight="30dp">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="Post Your Product Requirement"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/colorPrimaryDark"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:id="@+id/title_name"
+                android:ems="10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Enter required product name "/>
+
+
+        </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/cat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_no_outline"
+                android:padding="1dp"
+                android:text="  Select the Category"
+                android:textColor="@color/blue5"
+                android:textSize="18dp" />
+            <Spinner
+                android:id="@+id/category"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_outline"
+                android:padding="12dp"
+                android:layout_margin="5dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/name_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <EditText
+                    android:id="@+id/descri"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Description of the product "/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/pricename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <EditText
+                    android:id="@+id/price_exp"
+                    android:ems="10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Expected Price : "/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/post_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload Request"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:paddingTop="20dp"
+                android:layout_margin="10dp"
+                android:textSize="16dp"
+                android:theme="@style/MyButton"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

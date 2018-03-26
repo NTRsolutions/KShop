@@ -42,7 +42,7 @@ public class SearchActivity extends AppCompatActivity
 
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-
+    private int key=0;
     EditText search_text;
     Button login,signin;
 
@@ -188,6 +188,9 @@ public class SearchActivity extends AppCompatActivity
             final Intent electronic = new Intent(SearchActivity.this,MiscellaneousActivity.class);
             startActivity(electronic);
 
+        }else if (id == R.id.donation) {
+            final Intent electronic = new Intent(SearchActivity.this, DonationActivity.class);
+            startActivity(electronic);
         } else if (id == R.id.myprofile) {
             final Intent upload = new Intent(SearchActivity.this,MyProfileActivity.class);
             startActivity(upload);
@@ -222,7 +225,8 @@ public class SearchActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             Intent nxtlogin = new Intent(SearchActivity.this, PostLoginActivity.class);
-                            Log.d("login", "testing");
+                            key = 0;
+                            nxtlogin.putExtra("type_key",key);
                             startActivity(nxtlogin);
                         }
                     });
@@ -230,8 +234,9 @@ public class SearchActivity extends AppCompatActivity
                     signin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.d("sign in checking", "tested");
                             final Intent nxtsignin = new Intent(SearchActivity.this, PostSigninActivity.class);
+                            key = 0;
+                            nxtsignin.putExtra("type_key",key);
                             startActivity(nxtsignin);
                         }
                     });
@@ -254,8 +259,66 @@ public class SearchActivity extends AppCompatActivity
                 }
 
             }
-        }
-        else if (id == R.id.logout) {
+        } else if (id == R.id.gift){
+            if (mAuth.getCurrentUser() != null) {
+                // User is logged in
+                final Intent upload = new Intent(SearchActivity.this, DonateActivity.class);
+                startActivity(upload);
+            } else {
+                try {
+                    LayoutInflater inflater = getLayoutInflater();
+                    View alertLayout;
+                    alertLayout = inflater.inflate(R.layout.activity_inflater, null);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(SearchActivity.this);
+                    //Set the button id
+                    login = (Button) alertLayout.findViewById(R.id.log_in);
+                    signin = (Button) alertLayout.findViewById(R.id.sign_in);
+                    alert.setTitle("Login or Signin");
+                    // this is set the view from XML inside AlertDialog
+                    alert.setView(alertLayout);
+                    // disallow cancel of AlertDialog on click of back button and outside touch
+                    alert.setCancelable(false);
+
+                    login.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent nxtlogin = new Intent(SearchActivity.this, PostLoginActivity.class);
+                            key=1;
+                            nxtlogin.putExtra("type_key",key);
+                            startActivity(nxtlogin);
+                        }
+                    });
+
+                    signin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //Log.d("sign in checking", "tested");
+                            final Intent nxtsignin = new Intent(SearchActivity.this, PostSigninActivity.class);
+                            key=1;
+                            nxtsignin.putExtra("type_key",key);
+                            startActivity(nxtsignin);
+                        }
+                    });
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                            /*final Intent cancel = new Intent(HomeActivity.this, HomeActivity.class);
+                            startActivity(cancel);*/
+
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+                } catch (Exception e) {
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else if (id == R.id.about){
+            final Intent about = new Intent(SearchActivity.this, AboutActivity.class);
+            startActivity(about);
+        } else if (id == R.id.logout) {
 
             //End user session
             if(mAuth.getCurrentUser().getUid() != null){

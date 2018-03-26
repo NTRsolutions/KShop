@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/searches"
@@ -30,7 +31,11 @@
         <item
             android:id="@+id/donation"
             android:icon="@drawable/gift"
-            android:title="Donatation" />
+            android:title="Donations" />
+        <item
+            android:id="@+id/requirement"
+            android:icon="@drawable/requirement"
+            android:title="Requirements"/>
     </group>
 
     <item android:title="My Account">
@@ -43,6 +48,10 @@
                 android:id="@+id/gift"
                 android:icon="@drawable/gift"
                 android:title="Donate" />
+            <item
+                android:id="@+id/request"
+                android:icon="@drawable/request"
+                android:title="Request a requirement"/>
 
             <item
                 android:id="@+id/myprofile"

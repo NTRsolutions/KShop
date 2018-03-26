@@ -147,7 +147,6 @@
                     android:inputType="textMultiLine"
                     android:lines="3"
                     android:maxLines="5"
-
                     android:textAlignment="center"
                     android:scrollbars="vertical"
                     android:hint="Address"/>

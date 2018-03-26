@@ -62,7 +62,17 @@
         <activity android:name=".DonationActivity" />
         <activity android:name=".DonateActivity" />
         <activity android:name=".AboutActivity" />
-        <activity android:name=".TermsAndConditionsActivity"></activity>
+        <activity android:name=".TermsAndConditionsActivity" />
+        <activity android:name=".RequestActivity" />
+        <activity
+            android:name=".ViewRequestsActivity"
+            android:label="@string/title_activity_view_requests"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".RequestsActivity" />
+        <activity
+            android:name=".MyRequestActivity"
+            android:label="@string/title_activity_my_request"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

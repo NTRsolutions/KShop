@@ -117,7 +117,7 @@ public class AboutActivity extends AppCompatActivity
             startActivity(misc);
 
         } else if (id == R.id.donation){
-            final Intent donation = new Intent(AboutActivity.this, MiscellaneousActivity.class);
+            final Intent donation = new Intent(AboutActivity.this, DonationActivity.class);
             startActivity(donation);
         }
         else if (id == R.id.gift){
@@ -249,7 +249,7 @@ public class AboutActivity extends AppCompatActivity
                 }
 
             }
-        } else if (id == R.id.logout) {
+        } else if(id == R.id.logout) {
 
             if (mAuth.getCurrentUser() != null) {
                 //End users session
@@ -264,8 +264,20 @@ public class AboutActivity extends AppCompatActivity
         } else if (id == R.id.about) {
             Intent about = new Intent(AboutActivity.this, AboutActivity.class);
             startActivity(about);
-        } else if (id == R.id.sett) {
+        } else if (id == R.id.requirement){
+                Intent requ = new Intent(AboutActivity.this, ViewRequestsActivity.class);
+                startActivity(requ);
 
+        } else if (id == R.id.request){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(AboutActivity.this, RequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(AboutActivity.this, "Log in to request a requirement... !", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.termsncond){
+            Intent tnc = new Intent(AboutActivity.this, TermsAndConditionsActivity.class);
+            startActivity(tnc);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

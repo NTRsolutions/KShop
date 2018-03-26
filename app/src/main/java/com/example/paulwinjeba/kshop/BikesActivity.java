@@ -176,10 +176,9 @@ public class BikesActivity extends AppCompatActivity
             startActivity(electronic);
 
         }else if (id == R.id.donation){
-            final Intent electronic = new Intent(BikesActivity.this, MiscellaneousActivity.class);
+            final Intent electronic = new Intent(BikesActivity.this, DonationActivity.class);
             startActivity(electronic);
-        }
-        else if (id == R.id.upload) {
+        } else if (id == R.id.upload) {
             if (mAuth.getCurrentUser() != null) {
                 // User is logged in
                 final Intent upload = new Intent(BikesActivity.this, PostActivity.class);
@@ -235,7 +234,7 @@ public class BikesActivity extends AppCompatActivity
                 }
 
             }
-        }else if (id == R.id.gift){
+        } else if (id == R.id.gift){
             if (mAuth.getCurrentUser() != null) {
                 // User is logged in
                 final Intent upload = new Intent(BikesActivity.this, DonateActivity.class);
@@ -291,8 +290,7 @@ public class BikesActivity extends AppCompatActivity
                     Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        else if (id == R.id.myprofile) {
+        } else if (id == R.id.myprofile) {
             if (mAuth.getCurrentUser() != null) {
                 final Intent profile = new Intent(BikesActivity.this, MyProfileActivity.class);
                 String UUid = mAuth.getCurrentUser().getUid().toString();
@@ -312,8 +310,7 @@ public class BikesActivity extends AppCompatActivity
         } else if (id == R.id.about){
             final Intent about = new Intent(BikesActivity.this, AboutActivity.class);
             startActivity(about);
-        }
-        else if (id == R.id.logout) {
+        } else if (id == R.id.logout) {
 
             //End user session
             if(mAuth.getCurrentUser() != null){
@@ -326,8 +323,20 @@ public class BikesActivity extends AppCompatActivity
             }
             else
                 Toast.makeText(BikesActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
-        } else if (id == R.id.sett) {
+        } else if (id == R.id.requirement){
+            Intent requ = new Intent(BikesActivity.this, ViewRequestsActivity.class);
+            startActivity(requ);
 
+        } else if (id == R.id.request){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(BikesActivity.this, RequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(BikesActivity.this, "Log in to request a requirement... !", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.termsncond){
+            Intent tnc = new Intent(BikesActivity.this, TermsAndConditionsActivity.class);
+            startActivity(tnc);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

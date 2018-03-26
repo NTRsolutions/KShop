@@ -336,16 +336,6 @@ public class DonateActivity extends AppCompatActivity {
                                 String key = databaseReference.child("Post").push().getKey();
 
                                 //mProgress.dismiss();
-                                //Upload in Electronics
-                                DatabaseReference newPostE = databaseReference.child("Electronics").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
                                 DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
@@ -379,16 +369,6 @@ public class DonateActivity extends AppCompatActivity {
                                 key = databaseReference.child("Post").push().getKey();
 
                                 //mProgress.dismiss();
-                                //Upload in Electronics
-                                DatabaseReference newPostE = databaseReference.child("Clothes").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
                                 DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
@@ -428,15 +408,6 @@ public class DonateActivity extends AppCompatActivity {
                                 key = databaseReference.child("Post").push().getKey();
 
                                 //mProgress.dismiss();
-                                //Upload in Bikes
-                                DatabaseReference newPostE = databaseReference.child("Bikes").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
@@ -475,16 +446,6 @@ public class DonateActivity extends AppCompatActivity {
 
                                 //mProgress.dismiss();
 
-                                //Upload in Books
-                                DatabaseReference newPostE = databaseReference.child("Books").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();
                                 DatabaseReference myPost = mDatabase.child(user_id).child("My Post").child(key);
@@ -517,17 +478,6 @@ public class DonateActivity extends AppCompatActivity {
                                 newPost.child("Price").setValue(price);
                                 newPost.child("UID").setValue(uuid);
                                 //mProgress.dismiss();
-
-                                //Upload in Miscellaneous
-                                DatabaseReference newPostE = databaseReference.child("Miscellaneous").child(key);
-
-                                newPostE.child("Title").setValue(title);
-                                newPostE.child("Image").setValue(downloadUrl.toString());
-                                newPostE.child("Category").setValue(category);
-                                newPostE.child("Description_1").setValue(description_1);
-                                newPostE.child("Description_2").setValue(description_2);
-                                newPostE.child("Price").setValue(price);
-                                newPostE.child("UID").setValue(uuid);
 
                                 //Upload under user
                                 String user_id = mAuth.getCurrentUser().getUid();

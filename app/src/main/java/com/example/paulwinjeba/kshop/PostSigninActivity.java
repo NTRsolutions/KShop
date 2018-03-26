@@ -34,11 +34,15 @@ public class PostSigninActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
+    private int intent_key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_signin);
+
+        Bundle extras = getIntent().getExtras();
+        intent_key = extras.getInt("key");
 
         nameField = (EditText) findViewById(R.id.username);
         emailField = (EditText) findViewById(R.id.email);
@@ -102,10 +106,19 @@ public class PostSigninActivity extends AppCompatActivity {
 
                         //mProgress.dismiss();
 
-                        Intent postsignin = new Intent(PostSigninActivity.this, PostActivity.class);
-                        postsignin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(postsignin);
-                        Toast.makeText(PostSigninActivity.this,"Successfully Registered... Ready to Post...",Toast.LENGTH_LONG).show();
+                        if (intent_key == 0){
+                            Intent postsignin = new Intent(PostSigninActivity.this, PostActivity.class);
+                            postsignin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(postsignin);
+                            Toast.makeText(PostSigninActivity.this,"Successfully Registered... Ready to Post...",Toast.LENGTH_LONG).show();
+                        }
+                        else if (intent_key == 1){
+                            Intent postsignin = new Intent(PostSigninActivity.this, DonateActivity.class);
+                            postsignin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(postsignin);
+                            Toast.makeText(PostSigninActivity.this,"Successfully Registered... Ready to post...",Toast.LENGTH_LONG).show();
+
+                        }
                     }
                 }
             });
