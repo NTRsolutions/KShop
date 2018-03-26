@@ -268,7 +268,6 @@ public class HomeActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             Intent nxtlogin = new Intent(HomeActivity.this, PostLoginActivity.class);
-                            Log.d("login", "testing");
                             startActivity(nxtlogin);
                         }
                     });
@@ -276,7 +275,6 @@ public class HomeActivity extends AppCompatActivity
                     signin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.d("sign in checking", "tested");
                             final Intent nxtsignin = new Intent(HomeActivity.this, PostSigninActivity.class);
                             startActivity(nxtsignin);
                         }

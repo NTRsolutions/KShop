@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.paulwinjeba.kshop.DeleteMyPostActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/input_outline"
         android:orientation="vertical"
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/show_image"
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_margin="3dp"
             android:adjustViewBounds="true"
             android:background="@drawable/input_outline"
-            android:cropToPadding="true"
             android:minHeight="150dp"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@android:drawable/ic_menu_add"/>
 
         <TextView
-            android:id="@+id/show_title"
+            android:id="@+id/post_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="Post Title"
             android:textSize="22dp"
             android:textStyle="bold" />
@@ -36,28 +36,28 @@
             android:id="@+id/show_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="Category"
             android:textSize="22dp" />
         <TextView
             android:id="@+id/show_description1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="Description_1"
             android:textSize="22dp" />
         <TextView
             android:id="@+id/show_description2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="Description_2"
             android:textSize="22dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/price_tag"
@@ -68,13 +68,29 @@
                 android:textColor="@color/colorPrimaryDark"/>
             <TextView
 
-                android:id="@+id/show_price"
+                android:id="@+id/post_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:orientation="horizontal"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:textSize="22dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:theme="@style/MyButton"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 

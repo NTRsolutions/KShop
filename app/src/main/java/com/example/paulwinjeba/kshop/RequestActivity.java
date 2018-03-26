@@ -1,5 +1,7 @@
 package com.example.paulwinjeba.kshop;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +29,7 @@ public class RequestActivity extends AppCompatActivity {
     private DatabaseReference mydatabase;
     private FirebaseAuth myauth;
     private Button upload_request;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,8 @@ public class RequestActivity extends AppCompatActivity {
         myauth = FirebaseAuth.getInstance();
         final String uuid = myauth.getCurrentUser().getUid();
         mydatabase = FirebaseDatabase.getInstance().getReference();
+
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         title_name = (EditText) findViewById(R.id.title_name);
         descri = (EditText) findViewById(R.id.descri);
@@ -87,6 +94,8 @@ public class RequestActivity extends AppCompatActivity {
         upload_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                progressBar.setVisibility(View.VISIBLE);
                 String title = title_name.getText().toString().trim();
                 String description = descri.getText().toString().trim();
                 String price = price_exp.getText().toString().trim();
@@ -100,6 +109,10 @@ public class RequestActivity extends AppCompatActivity {
                 newRequest.child("Expected_Price").setValue(price);
                 newRequest.child("User").setValue(uuid);
 
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getBaseContext(), "Request Uploaded...", Toast.LENGTH_SHORT).show();
+                Intent uploaded = new Intent(RequestActivity.this,HomeActivity.class);
+                startActivity(uploaded);
                 //DatabaseReference newRequestUser = mydatabase.child("Users").child(uuid).child(key);
             }
         });

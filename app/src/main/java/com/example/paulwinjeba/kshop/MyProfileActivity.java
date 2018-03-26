@@ -44,7 +44,8 @@ public class MyProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_profile);
 
         mAuth = FirebaseAuth.getInstance();
-        myUuid = getIntent().getExtras().getString("uuid");
+        //myUuid = getIntent().getExtras().getString("uuid");
+        myUuid = mAuth.getCurrentUser().getUid();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid);
 
@@ -218,6 +219,9 @@ public class MyProfileActivity extends AppCompatActivity
 
                 }
             }
+        } else if(id == R.id.mypost) {
+            final Intent upload = new Intent(MyProfileActivity.this, MyPostActivity.class);
+            startActivity(upload);
         } else if (id == R.id.gift){
             if (mAuth.getCurrentUser() != null) {
                 // User is logged in

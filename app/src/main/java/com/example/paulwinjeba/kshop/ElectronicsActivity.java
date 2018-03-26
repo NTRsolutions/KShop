@@ -28,6 +28,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 public class ElectronicsActivity extends AppCompatActivity
@@ -45,7 +46,7 @@ public class ElectronicsActivity extends AppCompatActivity
         setContentView(R.layout.activity_electronics);
 
         //Change the database tree name :child
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Electronics");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
         mAuth = FirebaseAuth.getInstance();
 
         electronics_post = (RecyclerView) findViewById(R.id.electronics_view);
@@ -68,11 +69,12 @@ public class ElectronicsActivity extends AppCompatActivity
     @Override
     protected void onStart(){
         super.onStart();
+        Query electronics = databaseReference.orderByChild("Category").equalTo("Electronics");
         FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder>(
                 Blog.class,
                 R.layout.post_row,
                 ElectronicsActivity.BlogViewHolder.class,
-                databaseReference
+                electronics
         ) {
             @Override
             protected void populateViewHolder(ElectronicsActivity.BlogViewHolder viewHolder, Blog model, int position) {

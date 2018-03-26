@@ -43,7 +43,7 @@ public class RequestsActivity extends AppCompatActivity {
                 String show_Title = (String) dataSnapshot.child("Title").getValue();
                 String show_Description = (String) dataSnapshot.child("Description").getValue();
                 String show_Price = (String) dataSnapshot.child("Expected_Price").getValue();
-                String show_Uid = (String) dataSnapshot.child("UID").getValue();
+                String show_Uid = (String) dataSnapshot.child("User").getValue();
 
                 show_title.setText(show_Title);
                 show_desc.setText(show_Description);

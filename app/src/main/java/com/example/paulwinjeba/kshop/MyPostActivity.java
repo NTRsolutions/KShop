@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class MyPostActivity extends AppCompatActivity
     private int key=0;
     String post_key= null,myUuid;
     FirebaseAuth mAuth;
-    private DatabaseReference databaseReference,database;
+    private DatabaseReference databaseReference;
 
     Button login,signin,edit,delete;
     @Override
@@ -46,8 +47,8 @@ public class MyPostActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_post);
 
         mAuth = FirebaseAuth.getInstance();
-        myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Post").child(myUuid);
+        myUuid = mAuth.getCurrentUser().getUid().toString();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid).child("My Post");
         //String post_key = getIntent().getExtras().getString("blog_id");
 
         edit = (Button) findViewById(R.id.edit);
@@ -69,44 +70,32 @@ public class MyPostActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /*delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                databaseReference.child(post_key).removeValue();
-
-                Intent homeagain = new Intent(MyPostActivity.this, HomeActivity.class);
-                startActivity(homeagain);
-            }
-        });*/
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        FirebaseRecyclerAdapter<MyBlog, MyBlogViewHolder> my_firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyBlog, MyBlogViewHolder>(
-                MyBlog.class,
-                R.layout.my_posts,
-                MyBlogViewHolder.class,
+        FirebaseRecyclerAdapter<Blog, BlogViewHolder> my_firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+                Blog.class,
+                R.layout.post_row,
+                BlogViewHolder.class,
                 databaseReference
         ) {
             @Override
-            protected void populateViewHolder(MyPostActivity.MyBlogViewHolder viewHolder, MyBlog model, int position) {
+            protected void populateViewHolder(MyPostActivity.BlogViewHolder viewHolder, Blog model, int position) {
 
                 post_key = getRef(position).getKey().toString();
 
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setPrice(model.getPrice());
                 viewHolder.setImage(getApplicationContext(),model.getImage());
-                viewHolder.setCategory(model.getCategory());
-                viewHolder.setDescription_1(model.getDescription_1());
-                viewHolder.setDescription_2(model.getDescription_2());
 
-                delete.setOnClickListener(new View.OnClickListener() {
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        databaseReference.child(post_key).removeValue();
-                        Intent homeintent = new Intent(MyPostActivity.this,HomeActivity.class);
-                        startActivity(homeintent);
+                        Intent singleBlogIntent = new Intent(MyPostActivity.this,DeleteMyPostActivity.class);
+                        singleBlogIntent.putExtra("blog_id",post_key);
+                        startActivity(singleBlogIntent);
                     }
                 });
             }
@@ -116,11 +105,11 @@ public class MyPostActivity extends AppCompatActivity
     }
 
 
-    public static class MyBlogViewHolder extends RecyclerView.ViewHolder{
+    public static class BlogViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
 
-        public MyBlogViewHolder(View itemView) {
+        public BlogViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
@@ -134,21 +123,6 @@ public class MyPostActivity extends AppCompatActivity
         public void setPrice(String Price){
             TextView post_price = (TextView) mView.findViewById(R.id.post_price);
             post_price.setText(Price);
-        }
-
-        public void setCategory(String Category){
-            TextView post_category = (TextView) mView.findViewById(R.id.show_category);
-            post_category.setText(Category);
-        }
-
-        public void setDescription_1(String Description_1){
-            TextView post_desc_1 = (TextView) mView.findViewById(R.id.show_description1);
-            post_desc_1.setText(Description_1);
-        }
-
-        public void setDescription_2(String Description_2){
-            TextView post_desc_2 = (TextView) mView.findViewById(R.id.show_description2);
-            post_desc_2.setText(Description_2);
         }
 
         public void setImage(Context ctx, String Image){
@@ -165,8 +139,8 @@ public class MyPostActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            //super.onBackPressed();
-            finish();
+            super.onBackPressed();
+            //finish();
         }
     }
 

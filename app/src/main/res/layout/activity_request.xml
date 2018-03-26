@@ -65,6 +65,17 @@
                 android:padding="12dp"
                 android:layout_margin="5dp" />
 
+            <TextView
+                android:id="@+id/must_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dip"
+                android:textStyle="bold"
+                android:text="*Select one option "
+                android:visibility="gone"
+                android:textColor="@color/colorAccent"/>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/name_desc"
                 android:layout_width="match_parent"
@@ -111,6 +122,15 @@
                 android:layout_margin="10dp"
                 android:textSize="16dp"
                 android:theme="@style/MyButton"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressbar"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:layout_centerVertical="true"/>
 
         </LinearLayout>
     </ScrollView>

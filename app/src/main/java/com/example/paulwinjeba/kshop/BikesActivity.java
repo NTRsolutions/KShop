@@ -27,6 +27,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 public class BikesActivity extends AppCompatActivity
@@ -45,7 +46,7 @@ public class BikesActivity extends AppCompatActivity
         setContentView(R.layout.activity_bikes);
 
         //Change the database tree name :child
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bikes");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Post");
         mAuth = FirebaseAuth.getInstance();
 
         post = (RecyclerView) findViewById(R.id.bikes_view);
@@ -67,11 +68,12 @@ public class BikesActivity extends AppCompatActivity
     @Override
     protected void onStart(){
         super.onStart();
+        Query bikes = databaseReference.orderByChild("Category").equalTo("Bikes");
         FirebaseRecyclerAdapter<Blog, BikesActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BikesActivity.BlogViewHolder>(
                 Blog.class,
                 R.layout.post_row,
                 BikesActivity.BlogViewHolder.class,
-                databaseReference
+                bikes
         ) {
             @Override
             protected void populateViewHolder(BikesActivity.BlogViewHolder viewHolder, Blog model, int position) {
@@ -302,7 +304,6 @@ public class BikesActivity extends AppCompatActivity
         } else if (id == R.id.mypost) {
             if (mAuth.getCurrentUser() != null) {
                 final Intent mypost = new Intent(BikesActivity.this, MyPostActivity.class);
-
                 startActivity(mypost);
             } else {
                 Toast.makeText(BikesActivity.this,"Log in to check your posts !",Toast.LENGTH_LONG).show();

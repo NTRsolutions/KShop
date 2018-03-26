@@ -72,7 +72,8 @@
         <activity
             android:name=".MyRequestActivity"
             android:label="@string/title_activity_my_request"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".DeleteMyPostActivity"></activity>
     </application>
 
 </manifest>
