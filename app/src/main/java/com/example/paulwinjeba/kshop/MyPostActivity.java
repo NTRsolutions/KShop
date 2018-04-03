@@ -38,9 +38,10 @@ public class MyPostActivity extends AppCompatActivity
     private int key=0;
     String post_key= null,myUuid;
     FirebaseAuth mAuth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,postdb,donatedb;
+    private ProgressBar progressBar;
 
-    Button login,signin,edit,delete;
+    Button login,signin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +50,12 @@ public class MyPostActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         myUuid = mAuth.getCurrentUser().getUid().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid).child("My Post");
+
         //String post_key = getIntent().getExtras().getString("blog_id");
 
-        edit = (Button) findViewById(R.id.edit);
-        delete = (Button) findViewById(R.id.delete);
+        /*edit = (Button) findViewById(R.id.edit);*/
+
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         MyPostList = (RecyclerView) findViewById(R.id.my_posts);
         MyPostList.setHasFixedSize(true);
@@ -75,29 +78,47 @@ public class MyPostActivity extends AppCompatActivity
     @Override
     protected void onStart(){
         super.onStart();
-        FirebaseRecyclerAdapter<Blog, BlogViewHolder> my_firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
-                Blog.class,
-                R.layout.post_row,
-                BlogViewHolder.class,
+        FirebaseRecyclerAdapter<MyBlog, MyBlogViewHolder> my_firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<MyBlog, MyBlogViewHolder>(
+                MyBlog.class,
+                R.layout.my_posts,
+                MyBlogViewHolder.class,
                 databaseReference
         ) {
             @Override
-            protected void populateViewHolder(MyPostActivity.BlogViewHolder viewHolder, Blog model, int position) {
+            protected void populateViewHolder(MyPostActivity.MyBlogViewHolder viewHolder, MyBlog model, int position) {
 
                 post_key = getRef(position).getKey().toString();
+                postdb = FirebaseDatabase.getInstance().getReference().child("Post").child(post_key);
+                donatedb = FirebaseDatabase.getInstance().getReference().child("Donation").child(post_key);
 
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setPrice(model.getPrice());
                 viewHolder.setImage(getApplicationContext(),model.getImage());
+                viewHolder.setDescription_1(model.getDescription_1());
+                viewHolder.setDescription_2(model.getDescription_2());
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        databaseReference.removeValue();
+                        postdb.removeValue();
+
+                        Toast.makeText(MyPostActivity.this, "Product Deleted ...", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        Intent homeintent = new Intent(MyPostActivity.this, HomeActivity.class);
+                        startActivity(homeintent);
+                    }
+                });
+
+                /*viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent singleBlogIntent = new Intent(MyPostActivity.this,DeleteMyPostActivity.class);
                         singleBlogIntent.putExtra("blog_id",post_key);
                         startActivity(singleBlogIntent);
                     }
-                });
+                });*/
             }
         };
 
@@ -105,14 +126,15 @@ public class MyPostActivity extends AppCompatActivity
     }
 
 
-    public static class BlogViewHolder extends RecyclerView.ViewHolder{
+    public static class MyBlogViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
+        Button delete;
 
-        public BlogViewHolder(View itemView) {
+        public MyBlogViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-
+            delete = (Button) mView.findViewById(R.id.delete);
         }
 
         public void setTitle(String Title){
@@ -128,6 +150,16 @@ public class MyPostActivity extends AppCompatActivity
         public void setImage(Context ctx, String Image){
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(ctx.getApplicationContext()).load(Image).into(post_image);
+        }
+
+        public void setDescription_1(String Description_1){
+            TextView description_1 = (TextView) mView.findViewById(R.id.show_description1);
+            description_1.setText(Description_1);
+        }
+
+        public void setDescription_2(String Description_2){
+            TextView description_2 = (TextView) mView.findViewById(R.id.show_description2);
+            description_2.setText(Description_2);
         }
     }
 
@@ -173,11 +205,11 @@ public class MyPostActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.searches){
+        /*if(id == R.id.searches){
             final Intent search = new Intent(MyPostActivity.this, SearchActivity.class);
             startActivity(search);
 
-        } else if (id == R.id.electronics) {
+        } else */if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(MyPostActivity.this,ElectronicsActivity.class);
             startActivity(electronic);
@@ -354,6 +386,14 @@ public class MyPostActivity extends AppCompatActivity
         } else if (id == R.id.termsncond){
             Intent tnc = new Intent(MyPostActivity.this, TermsAndConditionsActivity.class);
             startActivity(tnc);
+        }  else if (id == R.id.myreq){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(MyPostActivity.this, MyRequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(MyPostActivity.this, "Log in to view your request... !", Toast.LENGTH_LONG).show();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

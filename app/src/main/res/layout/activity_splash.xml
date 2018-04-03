@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="100dp"
 
-            app:srcCompat="@drawable/kshop" />
+            app:srcCompat="@drawable/kshop_o" />
 
         <TextView
             android:id="@+id/splashtxt"

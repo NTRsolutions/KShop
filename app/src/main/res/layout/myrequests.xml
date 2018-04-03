@@ -66,28 +66,20 @@
                 android:textSize="20dp"
                 android:textColor="@color/colorPrimaryDark"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <Button
-                    android:id="@+id/edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Edit"
-                    android:theme="@style/MyButton"/>
                 <Button
                     android:id="@+id/delete"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Delete"
-                    android:layout_weight="1"
                     android:theme="@style/MyButton"/>
-
-            </LinearLayout>
         </LinearLayout>
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressbar"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
     </ScrollView>
 </LinearLayout>

@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/kshop"
+                app:srcCompat="@drawable/kshop_o"
                 android:orientation="horizontal" />
 
             <TextView

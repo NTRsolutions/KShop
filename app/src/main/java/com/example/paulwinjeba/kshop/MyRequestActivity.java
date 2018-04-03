@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +20,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MyRequestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FirebaseAuth mAuth;
-    private DatabaseReference databaseReference;
-    Button login,signin;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mydatabaseReference,databaseReference;
+    private Button login,signin;
+    private String myUuid;
+    private RecyclerView MyReqList;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +45,6 @@ public class MyRequestActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_request);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,7 +54,94 @@ public class MyRequestActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        myUuid = mAuth.getCurrentUser().getUid().toString();
+        mydatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(myUuid).child("My Requests");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Requests");
+
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+
+        MyReqList = (RecyclerView) findViewById(R.id.myrequest);
+
+        LinearLayoutManager linearlayout = new LinearLayoutManager(this);
+        linearlayout.setReverseLayout(true);
+        linearlayout.setStackFromEnd(true);
+
+        MyReqList.setHasFixedSize(true);
+        MyReqList.setLayoutManager(linearlayout);
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        final FirebaseRecyclerAdapter<Request, MyRequestActivity.RequestViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Request, MyRequestActivity.RequestViewHolder>(
+                Request.class,
+                R.layout.viewrequests,
+                MyRequestActivity.RequestViewHolder.class,
+                mydatabaseReference
+        ) {
+            @Override
+            protected void populateViewHolder(MyRequestActivity.RequestViewHolder viewHolder, Request model, int position) {
+
+                final String req_key = getRef(position).getKey().toString();
+
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setCategory(model.getCategory());
+                viewHolder.setDescritption(model.getDescription());
+                viewHolder.setExpected_Price(model.getExpected_Price());
+
+                viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        databaseReference.child(req_key).removeValue();
+                        mydatabaseReference.child(req_key).removeValue();
+
+                        Toast.makeText(MyRequestActivity.this, "Product Deleted ...", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        Intent homeintent = new Intent(MyRequestActivity.this, HomeActivity.class);
+                        startActivity(homeintent);
+                    }
+                });
+            }
+        };
+
+        MyReqList.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class RequestViewHolder extends RecyclerView.ViewHolder{
+
+        View mView;
+        Button delete;
+
+        public RequestViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+            delete = (Button) mView.findViewById(R.id.delete);
+        }
+
+        public void setTitle(String Title){
+            TextView title = (TextView) mView.findViewById(R.id.show_title);
+            title.setText(Title);
+        }
+
+        public void setCategory(String Category){
+            TextView category = (TextView) mView.findViewById(R.id.show_category);
+            category.setText(Category);
+        }
+
+        public void setDescritption(String Description){
+            TextView description = (TextView) mView.findViewById(R.id.show_description);
+            description.setText(Description);
+        }
+
+        public void setExpected_Price(String Expected_Price){
+            TextView exp_price = (TextView) mView.findViewById(R.id.show_price);
+            exp_price.setText(Expected_Price);
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -73,10 +168,10 @@ public class MyRequestActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
         }
-
+*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -86,11 +181,11 @@ public class MyRequestActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.searches){
+        /*if(id == R.id.searches){
             final Intent search = new Intent(MyRequestActivity.this, SearchActivity.class);
             startActivity(search);
 
-        } else
+        } else*/
         if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(MyRequestActivity.this,ElectronicsActivity.class);

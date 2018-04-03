@@ -4,10 +4,10 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
+        <!--<item
             android:id="@+id/searches"
             android:icon="@drawable/search"
-            android:title="Search"/>
+            android:title="Search"/>-->
         <item
             android:id="@+id/electronics"
             android:icon="@drawable/electronic"
@@ -54,20 +54,21 @@
                 android:title="Request a requirement"/>
 
             <item
-                android:id="@+id/myprofile"
-                android:icon="@drawable/my_profile"
-                android:title="My Profile">
-
-            </item>
-            <item
                 android:id="@+id/mypost"
                 android:title="My Post"
                 android:icon="@drawable/add_img">
             </item>
             <item
-                android:id="@+id/logout"
-                android:icon="@drawable/logout"
-                android:title="Logout" />
+                android:id="@+id/myreq"
+                android:icon="@drawable/myrequest"
+                android:title="My Requests">
+
+            </item>
+            <item
+                android:id="@+id/myprofile"
+                android:icon="@drawable/my_profile"
+                android:title="My Profile">
+            </item>
             <item
                 android:title="About"
                 android:icon="@drawable/about"
@@ -79,5 +80,4 @@
                 tools:ignore="HardcodedText" />
         </menu>
     </item>
-
 </menu>

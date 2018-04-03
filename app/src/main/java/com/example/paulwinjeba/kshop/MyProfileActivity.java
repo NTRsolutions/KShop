@@ -127,11 +127,11 @@ public class MyProfileActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if(id == R.id.searches){
+        /*if(id == R.id.searches){
             final Intent search = new Intent(MyProfileActivity.this, SearchActivity.class);
             startActivity(search);
 
-        } else if (id == R.id.electronics) {
+        } else*/ if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(MyProfileActivity.this,ElectronicsActivity.class);
             startActivity(electronic);
@@ -308,6 +308,14 @@ public class MyProfileActivity extends AppCompatActivity
         } else if (id == R.id.termsncond){
             Intent tnc = new Intent(MyProfileActivity.this, TermsAndConditionsActivity.class);
             startActivity(tnc);
+        }  else if (id == R.id.myreq){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(MyProfileActivity.this, MyRequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(MyProfileActivity.this, "Log in to view your request... !", Toast.LENGTH_LONG).show();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

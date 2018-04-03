@@ -42,7 +42,7 @@ public class DonationActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bikes);
+        setContentView(R.layout.activity_donation);
 
         //Change the database tree name :child
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Donation");
@@ -150,11 +150,11 @@ public class DonationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if(id == R.id.searches){
+        /*if(id == R.id.searches){
             final Intent search = new Intent(DonationActivity.this, SearchActivity.class);
             startActivity(search);
 
-        } else if (id == R.id.electronics) {
+        } else*/ if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(DonationActivity.this, ElectronicsActivity.class);
             startActivity(electronic);
@@ -340,6 +340,14 @@ public class DonationActivity extends AppCompatActivity
         } else if (id == R.id.termsncond){
             Intent tnc = new Intent(DonationActivity.this, TermsAndConditionsActivity.class);
             startActivity(tnc);
+        }  else if (id == R.id.myreq){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(DonationActivity.this, MyRequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(DonationActivity.this, "Log in to view your request... !", Toast.LENGTH_LONG).show();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

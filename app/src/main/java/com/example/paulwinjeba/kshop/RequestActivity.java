@@ -2,6 +2,7 @@ package com.example.paulwinjeba.kshop;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,7 @@ public class RequestActivity extends AppCompatActivity {
     private Spinner category;
     private TextView mstlabel;
     private String item;
-    private DatabaseReference mydatabase;
+    private DatabaseReference database,mydatabase;
     private FirebaseAuth myauth;
     private Button upload_request;
     private ProgressBar progressBar;
@@ -38,7 +39,8 @@ public class RequestActivity extends AppCompatActivity {
 
         myauth = FirebaseAuth.getInstance();
         final String uuid = myauth.getCurrentUser().getUid();
-        mydatabase = FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance().getReference();
+        mydatabase = database.child("Users").child(uuid).child("My Requests");
 
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
@@ -101,13 +103,19 @@ public class RequestActivity extends AppCompatActivity {
                 String price = price_exp.getText().toString().trim();
                 String category = item;
 
-                DatabaseReference newRequest = mydatabase.child("Requests").push();
-                //String key = newRequest.getKey();
+                DatabaseReference newRequest = database.child("Requests").push();
+                String key = newRequest.getKey();
                 newRequest.child("Title").setValue(title);
                 newRequest.child("Category").setValue(category);
                 newRequest.child("Description").setValue(description);
                 newRequest.child("Expected_Price").setValue(price);
                 newRequest.child("User").setValue(uuid);
+
+                DatabaseReference myreq = mydatabase.child(key);
+                myreq.child("Title").setValue(title);
+                myreq.child("Category").setValue(category);
+                myreq.child("Description").setValue(description);
+                myreq.child("Expected_Price").setValue(price);
 
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getBaseContext(), "Request Uploaded...", Toast.LENGTH_SHORT).show();

@@ -82,10 +82,11 @@ public class DeleteMyPostActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 progressBar.setVisibility(View.VISIBLE);
-                databaseReference.child(post_key).removeValue();
-                postdb.child(post_key).removeValue();
+                databaseReference.removeValue();
+                postdb.removeValue();
+                Toast.makeText(DeleteMyPostActivity.this, "Product Deleted ...", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
                 Intent homeintent = new Intent(DeleteMyPostActivity.this, HomeActivity.class);
                 startActivity(homeintent);
             }

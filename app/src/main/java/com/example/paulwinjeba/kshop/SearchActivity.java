@@ -164,11 +164,11 @@ public class SearchActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.searches){
+        /*if(id == R.id.searches){
             final Intent search = new Intent(this, SearchActivity.class);
             startActivity(search);
 
-        } else if (id == R.id.electronics) {
+        } else*/ if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(SearchActivity.this,ElectronicsActivity.class);
             startActivity(electronic);
@@ -321,22 +321,18 @@ public class SearchActivity extends AppCompatActivity
         } else if (id == R.id.logout) {
 
             //End user session
-            if(mAuth.getCurrentUser().getUid() != null){
+            if (mAuth.getCurrentUser().getUid() != null) {
                 //End users session
                 FirebaseAuth.getInstance().signOut();
                 Intent homeagain = new Intent(SearchActivity.this, FirstpageActivity.class);
                 homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Toast.makeText(SearchActivity.this,"Logged Out Successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(SearchActivity.this, "Logged Out Successfully", Toast.LENGTH_LONG).show();
                 startActivity(homeagain);
-            }
-            else
-                Toast.makeText(SearchActivity.this,"Log in to Log out !",Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(SearchActivity.this, "Log in to Log out !", Toast.LENGTH_LONG).show();
 
-
-        }else if (id == R.id.sett) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

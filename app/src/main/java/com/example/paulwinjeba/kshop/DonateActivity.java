@@ -35,13 +35,13 @@ public class DonateActivity extends AppCompatActivity {
     EditText company_name,device_specification,specific_clothes,model_name,gear,noof_gear,brakes,rims,book_name,author_name,book_desc,description,description_bike;
     LinearLayout case_2,case_3,case3_1;
     private ImageButton post_img;
-    private EditText post_title, post_price;
+    private EditText post_title;
     private Button post_btn;
     private Uri imageUri = null;
     private final int PICK_IMAGE_REQUEST = 7;
     private Spinner category,cloth_type,cloth_size;
     //private ProgressDialog mProgress;
-    private String item,clothtype1,clothsize1,key;
+    private String item,clothtype1,clothsize1,key,post_price = "FREE";
 
     String description_1,description_2;
     //FirebaseStorage storage;
@@ -107,8 +107,6 @@ public class DonateActivity extends AppCompatActivity {
             case_2 = (LinearLayout) findViewById(R.id.case_2);
             case_3 = (LinearLayout) findViewById(R.id.case_3);
             case3_1 = (LinearLayout) findViewById(R.id.case3_1);
-
-            post_price = (EditText) findViewById(R.id.post_price);
 
             //Spinner element 1
             category = (Spinner) findViewById(R.id.category);
@@ -303,7 +301,7 @@ public class DonateActivity extends AppCompatActivity {
         try {
 
             final String title = post_title.getText().toString().trim();
-            final String price = post_price.getText().toString().trim();
+            final String price = post_price;
             final String category = item;
 
 
@@ -323,7 +321,7 @@ public class DonateActivity extends AppCompatActivity {
                                 description_1 = company_name.getText().toString().trim();
                                 description_2 = device_specification.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post").push();
+                                DatabaseReference newPost = databaseReference.child("Donation").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -333,7 +331,7 @@ public class DonateActivity extends AppCompatActivity {
                                 newPost.child("Price").setValue(price);
                                 newPost.child("UID").setValue(uuid);
 
-                                String key = databaseReference.child("Post").push().getKey();
+                                String key = databaseReference.child("Donation").push().getKey();
 
                                 //mProgress.dismiss();
                                 //Upload under user
@@ -356,7 +354,7 @@ public class DonateActivity extends AppCompatActivity {
                                 description_1 = "Material : " + clothtype1 + " Size : " + clothsize1;
                                 description_2 = specific_clothes.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post").push();
+                                DatabaseReference newPost = databaseReference.child("Donation").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -366,7 +364,7 @@ public class DonateActivity extends AppCompatActivity {
                                 newPost.child("Price").setValue(price);
                                 newPost.child("UID").setValue(uuid);
 
-                                key = databaseReference.child("Post").push().getKey();
+                                key = databaseReference.child("Donation").push().getKey();
 
                                 //mProgress.dismiss();
                                 //Upload under user
@@ -395,7 +393,7 @@ public class DonateActivity extends AppCompatActivity {
                                 description_1 = "Model : "+desc_model+" with Gear : "+desc_gear+ " Number of gears : "+nogear+ " , with Brakes : " +brake_s+ " and Rims : "+rim_s;
                                 description_2 = description_bike.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post").push();
+                                DatabaseReference newPost = databaseReference.child("Donation").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -405,7 +403,7 @@ public class DonateActivity extends AppCompatActivity {
                                 newPost.child("Price").setValue(price);
                                 newPost.child("UID").setValue(uuid);
 
-                                key = databaseReference.child("Post").push().getKey();
+                                key = databaseReference.child("Donation").push().getKey();
 
                                 //mProgress.dismiss();
 
@@ -432,7 +430,7 @@ public class DonateActivity extends AppCompatActivity {
                                 description_1 = "Book : "+bookname+ " Author : "+author;
                                 description_2 = book_desc.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post").push();
+                                DatabaseReference newPost = databaseReference.child("Donation").push();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -442,7 +440,7 @@ public class DonateActivity extends AppCompatActivity {
                                 newPost.child("Price").setValue(price);
                                 newPost.child("UID").setValue(uuid);
 
-                                key = databaseReference.child("Post").push().getKey();
+                                key = databaseReference.child("Donation").push().getKey();
 
                                 //mProgress.dismiss();
 
@@ -466,9 +464,9 @@ public class DonateActivity extends AppCompatActivity {
                                 description_1 = post_title.getText().toString().trim();
                                 description_2 = description.getText().toString().trim();
 
-                                DatabaseReference newPost = databaseReference.child("Post").push();
+                                DatabaseReference newPost = databaseReference.child("Donation").push();
 
-                                key = databaseReference.child("Post").push().getKey().toString();
+                                key = databaseReference.child("Donation").push().getKey().toString();
 
                                 newPost.child("Title").setValue(title);
                                 newPost.child("Image").setValue(downloadUrl.toString());
@@ -519,6 +517,6 @@ public class DonateActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         //Toast.makeText(PostActivity.this,"Cancelled...Press back again to Exit.",Toast.LENGTH_LONG).show();
-        //super.onBackPressed();
+        super.onBackPressed();
     }
 }

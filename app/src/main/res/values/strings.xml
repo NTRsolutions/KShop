@@ -54,5 +54,8 @@
     <string name="title_activity_view_requests">ViewRequestsActivity</string>
     <string name="title_activity_my_request">MyRequestActivity</string>
 
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
+
 </resources>
 

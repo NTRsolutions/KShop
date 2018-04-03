@@ -8,13 +8,17 @@ public class Request{
 
     private String Title;
     private String Category;
+    private String Description;
+    private String Expected_Price;
 
     public Request() {
     }
 
-    public Request(String title, String category) {
+    public Request(String title, String category, String description, String expected_Price) {
         Title = title;
         Category = category;
+        Description = description;
+        Expected_Price = expected_Price;
     }
 
     public String getTitle() {
@@ -31,5 +35,21 @@ public class Request{
 
     public void setCategory(String category) {
         Category = category;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getExpected_Price() {
+        return Expected_Price;
+    }
+
+    public void setExpected_Price(String expected_Price) {
+        Expected_Price = expected_Price;
     }
 }

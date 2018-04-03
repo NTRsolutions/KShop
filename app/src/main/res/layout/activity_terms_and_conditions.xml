@@ -1,9 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.paulwinjeba.kshop.TermsAndConditionsActivity">
+    android:orientation="vertical"
+    tools:context="com.example.paulwinjeba.kshop.TermsAndConditionsActivity"
+    android:scrollbars="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp">
 
-</android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                app:srcCompat="@drawable/kshop_o" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="Terms &amp; Connditions"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp"
+                tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:text=""
+            android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="General Conduct"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text=""
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="You agree not to post, email, host, display, upload, modify, publish, transmit, update or share any information on the Site"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="1.That is harmful, abusive, unlawful, threatening, harassing, blasphemous, defamatory invasive of another's privacy or other rights, hateful, or racially, ethnically objectionable, disparaging, relating or encouraging money laundering or illegal gambling or harms or could harm minors in any way or otherwise unlawful in any manner whatsoever;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="2.that harasses, degrades, intimidates or is hateful towards any individual or group of individuals on the basis of religion, gender, sexual orientation, race, ethnicity, age, or disability;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="3. that includes personal or identifying information about another person without that person's explicit consent;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="4. deceives or misleads the addressee about the origin of such messages or communicates any information which is grossly offensive or menacing in nature;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="5.  that includes links to commercial services or Third Party Products"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="6. that advertises any illegal services or the sale of any items the sale of which is prohibited or restricted by applicable law, including without limitation items the sale of which is prohibited or regulated by applicable law;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="7.  that contains software viruses or any other computer code, files or programs designed to interrupt, destroy or limit the functionality of any computer software or hardware or telecommunications equipment or any other computer resource;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="8. misleading email addresses, or forged headers or otherwise manipulated identifiers in order to disguise the origin of Content transmitted through the Service."
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="9. Contact anyone who has asked not to be contacted, or make unsolicited contact with anyone for any commercial purpose, specifically, contact any user to post advertisement on a third party website or post any advertisement on behalf of such user; or to stalk or otherwise harass anyone;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:text="10. collect personal data about other users or entities for commercial or unlawful purposes;"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+</LinearLayout>
+</ScrollView>

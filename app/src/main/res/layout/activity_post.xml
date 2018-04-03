@@ -5,6 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.paulwinjeba.kshop.PostActivity">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView android:layout_height="match_parent"
         android:layout_width="fill_parent" android:id="@+id/scrollView1">
@@ -37,16 +50,16 @@
                 android:layout_marginTop="10dp"
                 android:visibility="visible">
 
-            <EditText
-                android:id="@+id/post_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:inputType="text"
-                android:padding="12dp"
-                android:hint="Post Title"
-                android:textAlignment="viewStart"
-                android:visibility="visible" />
+                <EditText
+                    android:id="@+id/post_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:hint="Post Title"
+                    android:textAlignment="viewStart"
+                    android:visibility="visible" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -369,14 +382,14 @@
                 android:layout_marginTop="10dp"
                 android:visibility="visible">
 
-            <EditText
-                android:id="@+id/post_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:inputType="text"
-                android:padding="12dp"
-                android:hint="Post Price"/>
+                <EditText
+                    android:id="@+id/post_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:hint="Post Price"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -391,6 +404,15 @@
                 android:textSize="16dp"
                 android:drawableEnd="@drawable/upload"
                 android:theme="@style/MyButton"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressbar"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>

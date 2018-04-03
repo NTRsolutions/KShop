@@ -137,15 +137,33 @@ public class ElectronicsActivity extends AppCompatActivity
             // Handle action bar item clicks here. The action bar will
             // automatically handle clicks on the Home/Up button, so long
             // as you specify a parent activity in AndroidManifest.xml.
-        /*int id = item.getItemId();
+            int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+            //noinspection SimplifiableIfStatement
+            if(id == R.id.logout) {
 
-        return super.onOptionsItemSelected(item);*/
-            return true;
+                if (mAuth.getCurrentUser() != null) {
+                    //End users session
+                    FirebaseAuth.getInstance().signOut();
+                    Intent homeagain = new Intent(ElectronicsActivity.this, FirstpageActivity.class);
+                    homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Toast.makeText(ElectronicsActivity.this, "Logged Out Successfully", Toast.LENGTH_LONG).show();
+                    startActivity(homeagain);
+                } else
+                    Toast.makeText(ElectronicsActivity.this, "Log in to Log out !", Toast.LENGTH_LONG).show();
+            }
+            else if(id == R.id.signin){
+                if (mAuth.getCurrentUser() != null) {
+                    //End users session
+                    Toast.makeText(ElectronicsActivity.this, "Log Out to signin...", Toast.LENGTH_LONG).show();
+                } else{
+                    Intent homeagain = new Intent(ElectronicsActivity.this, FirstpageActivity.class);
+                    homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeagain);
+                }
+            }
+
+            return super.onOptionsItemSelected(item);
         }
         @SuppressWarnings("StatementWithEmptyBody")
         @Override
@@ -153,11 +171,11 @@ public class ElectronicsActivity extends AppCompatActivity
             // Handle navigation view item clicks here.
             int id = item.getItemId();
 
-            if(id == R.id.searches){
+            /*if(id == R.id.searches){
                 final Intent search = new Intent(ElectronicsActivity.this, SearchActivity.class);
                 startActivity(search);
 
-            } else
+            } else*/
             if (id == R.id.electronics) {
                 // Handle the electronics action
                 final Intent electronic = new Intent(ElectronicsActivity.this,ElectronicsActivity.class);
@@ -338,6 +356,14 @@ public class ElectronicsActivity extends AppCompatActivity
             } else if (id == R.id.termsncond){
                 Intent tnc = new Intent(ElectronicsActivity.this, TermsAndConditionsActivity.class);
                 startActivity(tnc);
+            }  else if (id == R.id.myreq){
+                if (mAuth.getCurrentUser() != null) {
+                    Intent request = new Intent(ElectronicsActivity.this, MyRequestActivity.class);
+                    startActivity(request);
+                }
+                else
+                    Toast.makeText(ElectronicsActivity.this, "Log in to view your request... !", Toast.LENGTH_LONG).show();
+
             }
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

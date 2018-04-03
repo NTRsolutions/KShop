@@ -142,12 +142,12 @@ public class ViewRequestsActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        /*int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -158,11 +158,11 @@ public class ViewRequestsActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.searches){
+        /*if(id == R.id.searches){
             final Intent search = new Intent(ViewRequestsActivity.this, SearchActivity.class);
             startActivity(search);
 
-        } else
+        } else*/
         if (id == R.id.electronics) {
             // Handle the electronics action
             final Intent electronic = new Intent(ViewRequestsActivity.this,ElectronicsActivity.class);
@@ -345,6 +345,14 @@ public class ViewRequestsActivity extends AppCompatActivity
         } else if (id == R.id.termsncond){
             Intent tnc = new Intent(ViewRequestsActivity.this, TermsAndConditionsActivity.class);
             startActivity(tnc);
+        }  else if (id == R.id.myreq){
+            if (mAuth.getCurrentUser() != null) {
+                Intent request = new Intent(ViewRequestsActivity.this, MyRequestActivity.class);
+                startActivity(request);
+            }
+            else
+                Toast.makeText(ViewRequestsActivity.this, "Log in to view your request... !", Toast.LENGTH_LONG).show();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
