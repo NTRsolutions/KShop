@@ -224,7 +224,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <EditText
                         android:id="@+id/no_of_gear"
@@ -233,7 +233,7 @@
                         android:ems="10"
                         android:hint="No. of gear"
                         android:inputType="number"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         tools:ignore="HardcodedText" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -271,7 +271,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".2"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <EditText
                         android:id="@+id/rims"

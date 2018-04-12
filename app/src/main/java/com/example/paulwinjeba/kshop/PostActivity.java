@@ -240,6 +240,7 @@ public class PostActivity extends AppCompatActivity {
                         modelname.setVisibility(View.VISIBLE);
                         case_3.setVisibility(View.VISIBLE);
                         case3_1.setVisibility(View.VISIBLE);
+                        desc_bike.setVisibility(View.VISIBLE);
                         break;
 
                     case 4:
@@ -252,6 +253,7 @@ public class PostActivity extends AppCompatActivity {
                         case_3.setVisibility(View.GONE);
                         case3_1.setVisibility(View.GONE);
                         desc.setVisibility(View.GONE);
+                        desc_bike.setVisibility(View.VISIBLE);
 
                         bookname.setVisibility(View.VISIBLE);
                         authorname.setVisibility(View.VISIBLE);
@@ -404,7 +406,7 @@ public class PostActivity extends AppCompatActivity {
                                 String nogear = noof_gear.getText().toString().trim();
                                 String brake_s = brakes.getText().toString().trim();
                                 String rim_s = rims.getText().toString().trim();
-                                description_1 = "Model : "+desc_model+" with Gear : "+desc_gear+ " Number of gears : "+nogear+ " , with Brakes : " +brake_s+ " and Rims : "+rim_s;
+                                description_1 = "Model : "+desc_model+" with Gear : "+desc_gear+ " Number of gears : "+nogear+ " , with Brake Type: " +brake_s+ " and Rims : "+rim_s;
                                 description_2 = description_bike.getText().toString().trim();
 
                                 DatabaseReference newPost = databaseReference.child("Post").push();

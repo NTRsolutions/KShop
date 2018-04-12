@@ -34,7 +34,6 @@ public class ViewRequestsActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private int key=0;
     private Button login,signin;
-    private String myUuid;
     private DatabaseReference databaseReference;
     private RecyclerView request;
 
@@ -55,7 +54,6 @@ public class ViewRequestsActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-        myUuid = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Requests");
 
         request = (RecyclerView) findViewById(R.id.request);
@@ -133,7 +131,6 @@ public class ViewRequestsActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.view_requests, menu);
         return true;
     }
 

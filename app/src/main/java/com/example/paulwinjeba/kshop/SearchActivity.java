@@ -318,21 +318,8 @@ public class SearchActivity extends AppCompatActivity
         } else if (id == R.id.about){
             final Intent about = new Intent(SearchActivity.this, AboutActivity.class);
             startActivity(about);
-        } else if (id == R.id.logout) {
-
-            //End user session
-            if (mAuth.getCurrentUser().getUid() != null) {
-                //End users session
-                FirebaseAuth.getInstance().signOut();
-                Intent homeagain = new Intent(SearchActivity.this, FirstpageActivity.class);
-                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Toast.makeText(SearchActivity.this, "Logged Out Successfully", Toast.LENGTH_LONG).show();
-                startActivity(homeagain);
-            } else
-                Toast.makeText(SearchActivity.this, "Log in to Log out !", Toast.LENGTH_LONG).show();
-
-
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

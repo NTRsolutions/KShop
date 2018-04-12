@@ -1,18 +1,14 @@
 package com.example.paulwinjeba.kshop;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -43,31 +39,19 @@ public class SplashActivity extends AppCompatActivity {
             public void run () {
                 try {
                     sleep(5000);
-                    if (isOnline) {
-                        //connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected() && connectivityManager.getActiveNetworkInfo().isAvailable()
-                        //internet is available
-                        {
-                            if (mAuth.getCurrentUser() != null) {
+                    if (mAuth.getCurrentUser() != null) {
                                 // User is logged in
                                 startActivity(home);
-                            }
-                            else
-                            {
-                                startActivity(i);
-                            }
-                        }
                     }
                     else
-                    if (!isOnline)
                     {
-                        // no Internet
-                        startActivity(home);
+                        startActivity(i);
                     }
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    finish();
+
                 }
             }
         };

@@ -136,6 +136,7 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:textSize="20dp"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
@@ -160,6 +161,7 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:textSize="20dp"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"/>
         </LinearLayout>
             <TextView
@@ -180,6 +182,7 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:textSize="20dp"
+                android:textIsSelectable="true"
                 android:textColor="@color/black" />
         </LinearLayout>
     </ScrollView>

@@ -69,7 +69,7 @@ public class MiscellaneousActivity extends AppCompatActivity
         Query miscellaneous = databaseReference.orderByChild("Category").equalTo("Miscellaneous");
         FirebaseRecyclerAdapter<Blog, MiscellaneousActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, MiscellaneousActivity.BlogViewHolder>(
                 Blog.class,
-                R.layout.post_row,
+                R.layout.post_row2,
                 MiscellaneousActivity.BlogViewHolder.class,
                 miscellaneous
         ) {
@@ -135,31 +135,6 @@ public class MiscellaneousActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if(id == R.id.logout) {
-
-            if (mAuth.getCurrentUser() != null) {
-                //End users session
-                FirebaseAuth.getInstance().signOut();
-                Intent homeagain = new Intent(MiscellaneousActivity.this, FirstpageActivity.class);
-                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Toast.makeText(MiscellaneousActivity.this, "Logged Out Successfully", Toast.LENGTH_LONG).show();
-                startActivity(homeagain);
-            } else
-                Toast.makeText(MiscellaneousActivity.this, "Log in to Log out !", Toast.LENGTH_LONG).show();
-        }
-        else if(id == R.id.signin){
-            if (mAuth.getCurrentUser() != null) {
-                //End users session
-                Toast.makeText(MiscellaneousActivity.this, "Log Out to signin...", Toast.LENGTH_LONG).show();
-            } else{
-                Intent homeagain = new Intent(MiscellaneousActivity.this, FirstpageActivity.class);
-                homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeagain);
-            }
-        }
 
         return super.onOptionsItemSelected(item);
     }

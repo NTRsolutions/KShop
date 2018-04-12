@@ -9,8 +9,8 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
         <activity
             android:name=".FirstpageActivity"
             android:theme="@style/AppTheme" />
@@ -34,7 +35,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".PostActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:label="Post Your Product"/>
         <activity
             android:name=".PostLoginActivity"
             android:theme="@style/AppTheme" />
@@ -47,33 +49,58 @@
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ElectronicsActivity" />
+        <activity android:name=".ElectronicsActivity"
+            android:label="Electronics"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".BikesActivity"
             android:label="Bikes"
             android:theme="@style/AppTheme" />
-        <activity android:name=".BooksActivity" />
-        <activity android:name=".ClothesActivity" />
-        <activity android:name=".MiscellaneousActivity" />
-        <activity android:name=".MyPostActivity" />
-        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".BooksActivity"
+            android:label="Books"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".ClothesActivity"
+            android:label="Clothes"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".MiscellaneousActivity"
+            android:label="Miscellaneous"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".MyPostActivity"
+            android:label="My Post"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".MyProfileActivity"
+            android:label="My Profile"
+            android:theme="@style/AppTheme"/>
         <activity android:name=".SearchActivity" />
+
         <activity android:name=".BlogSingleActivity" />
-        <activity android:name=".DonationActivity" />
-        <activity android:name=".DonateActivity" />
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".TermsAndConditionsActivity" />
+        <activity android:name=".DonationActivity"
+            android:label="Donations"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".DonateActivity"
+            android:label="Donate a Product"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".AboutActivity"
+            android:label="About"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".TermsAndConditionsActivity"
+            android:label="KShop : T &amp; C"
+            android:theme="@style/AppTheme"/>
         <activity android:name=".RequestActivity" />
         <activity
             android:name=".ViewRequestsActivity"
-            android:label="@string/title_activity_view_requests"
+            android:label="Requests"
             android:theme="@style/AppTheme" />
         <activity android:name=".RequestsActivity" />
         <activity
             android:name=".MyRequestActivity"
-            android:label="@string/title_activity_my_request"
+            android:label="My Requests"
             android:theme="@style/AppTheme" />
-        <activity android:name=".DeleteMyPostActivity"></activity>
+        <activity android:name=".DeleteMyPostActivity" />
+        <activity
+            android:name=".Home2Activity"
+            android:label="Home"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

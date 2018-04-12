@@ -38,7 +38,7 @@ public class FirstpageActivity extends AppCompatActivity {
         btnskiphome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent skiphome = new Intent(FirstpageActivity.this,HomeActivity.class);
+                Intent skiphome = new Intent(FirstpageActivity.this,Home2Activity.class);
                 startActivity(skiphome);
                 finish();
             }

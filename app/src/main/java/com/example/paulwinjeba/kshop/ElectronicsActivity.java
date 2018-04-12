@@ -72,7 +72,7 @@ public class ElectronicsActivity extends AppCompatActivity
         Query electronics = databaseReference.orderByChild("Category").equalTo("Electronics");
         FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, ElectronicsActivity.BlogViewHolder>(
                 Blog.class,
-                R.layout.post_row,
+                R.layout.post_row2,
                 ElectronicsActivity.BlogViewHolder.class,
                 electronics
         ) {
@@ -137,31 +137,6 @@ public class ElectronicsActivity extends AppCompatActivity
             // Handle action bar item clicks here. The action bar will
             // automatically handle clicks on the Home/Up button, so long
             // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if(id == R.id.logout) {
-
-                if (mAuth.getCurrentUser() != null) {
-                    //End users session
-                    FirebaseAuth.getInstance().signOut();
-                    Intent homeagain = new Intent(ElectronicsActivity.this, FirstpageActivity.class);
-                    homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    Toast.makeText(ElectronicsActivity.this, "Logged Out Successfully", Toast.LENGTH_LONG).show();
-                    startActivity(homeagain);
-                } else
-                    Toast.makeText(ElectronicsActivity.this, "Log in to Log out !", Toast.LENGTH_LONG).show();
-            }
-            else if(id == R.id.signin){
-                if (mAuth.getCurrentUser() != null) {
-                    //End users session
-                    Toast.makeText(ElectronicsActivity.this, "Log Out to signin...", Toast.LENGTH_LONG).show();
-                } else{
-                    Intent homeagain = new Intent(ElectronicsActivity.this, FirstpageActivity.class);
-                    homeagain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(homeagain);
-                }
-            }
 
             return super.onOptionsItemSelected(item);
         }
